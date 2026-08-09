@@ -90,6 +90,10 @@ function initLanguageDropdown() {
       ) as HTMLButtonElement;
       trigger?.setAttribute("aria-expanded", "false");
 
+      const lang = item.getAttribute("lang");
+      document.cookie =
+        `locale=${encodeURIComponent(lang!)}; Path=/; Max-Age=31536000; SameSite=Lax`;
+
       // Wait for menu close animation (300ms) before navigating
       setTimeout(() => {
         const href = (item as HTMLAnchorElement).href;
