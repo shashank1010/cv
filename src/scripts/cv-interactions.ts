@@ -3,7 +3,7 @@
 export function initCvInteractions() {
   initStickyNavFallback();
   initCtaPoke();
-  initLanguageSwitcher();
+  initLanguageDropdown();
 }
 
 function initStickyNavFallback() {
@@ -54,20 +54,67 @@ function initCtaPoke() {
   observer.observe(label);
 }
 
-function initLanguageSwitcher() {
-  const langSwitch = document.querySelector(".lang-switch");
-  const cta = document.getElementById("lets-talk");
+function initLanguageDropdown() {
+  // Handle dropdown menu toggle
+  const triggers = document.querySelectorAll(".lang-dropdown__trigger");
 
-  if (!langSwitch || !cta || typeof IntersectionObserver === "undefined") {
-    return;
-  }
+  triggers.forEach((trigger) => {
+    trigger.addEventListener("click", (e) => {
+      e.preventDefault();
+      const isExpanded = trigger.getAttribute("aria-expanded") === "true";
+      trigger.setAttribute("aria-expanded", String(!isExpanded));
+    });
+  });
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      langSwitch.classList.toggle("is-hidden", entry.intersectionRatio === 1);
-    },
-    { root: null, threshold: 1 },
-  );
+  // Close dropdown when clicking outside
+  document.addEventListener("click", (e) => {
+    const dropdowns = document.querySelectorAll(".lang-dropdown");
+    dropdowns.forEach((dropdown) => {
+      if (!dropdown.contains(e.target as Node)) {
+        const trigger = dropdown.querySelector(
+          ".lang-dropdown__trigger",
+        ) as HTMLButtonElement;
+        trigger?.setAttribute("aria-expanded", "false");
+      }
+    });
+  });
 
-  observer.observe(cta);
+  // Close dropdown when a language is selected and delay navigation
+  const items = document.querySelectorAll(".lang-dropdown__item");
+  items.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+      const dropdown = item.closest(".lang-dropdown");
+      const trigger = dropdown?.querySelector(
+        ".lang-dropdown__trigger",
+      ) as HTMLButtonElement;
+      trigger?.setAttribute("aria-expanded", "false");
+
+      // Wait for menu close animation (300ms) before navigating
+      setTimeout(() => {
+        const href = (item as HTMLAnchorElement).href;
+        if (href) {
+          window.location.href = href;
+        }
+      }, 300);
+    });
+  });
+
+  // Also close hamburger menu when nav links are clicked and delay navigation
+  const navLinks = document.querySelectorAll(".site-nav__list a");
+  navLinks.forEach((link) => {
+    link.addEventListener("click", (e) => {
+      const href = (link as HTMLAnchorElement).href;
+      // Only prevent default for anchor links (section navigation)
+      if (href.includes("#")) {
+        e.preventDefault();
+        const toggle = document.querySelector(
+          ".site-nav__toggle",
+        ) as HTMLButtonElement;
+        toggle?.setAttribute("aria-expanded", "false");
+
+        window.location.hash = (link as HTMLAnchorElement).hash;
+      }
+    });
+  });
 }

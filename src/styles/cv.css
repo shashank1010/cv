@@ -74,6 +74,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid var(--line);
   border-radius: var(--radius);
@@ -137,6 +138,10 @@ body {
   list-style: none;
 }
 
+.site-nav__list > li {
+  position: relative;
+}
+
 .site-nav__list :is(a, button) {
   display: inline-block;
   padding: 0.3rem 0.65rem;
@@ -156,6 +161,11 @@ body {
   color: var(--accent);
   background: var(--accent-soft);
   text-decoration: none;
+}
+
+.site-nav__list .lang-dropdown {
+  display: flex;
+  align-items: center;
 }
 
 /* Positive margin: higher values land closer to the document top (see nav clearance) */
@@ -895,13 +905,15 @@ section {
     padding: 0.5rem 0.65rem;
   }
 
-  .site-nav__list a {
-    padding: 0.28rem 0.45rem;
-    font-size: 0.7rem;
+  .job__head {
+    top: 3rem; /* shorter clearance under full-bleed mobile nav */
   }
 
-  .job__head {
-    top: 3.25rem; /* shorter clearance under full-bleed mobile nav */
+  #skills,
+  #experience,
+  #hobbies,
+  #lets-talk {
+    scroll-margin-top: 1rem;
   }
 
   .cta__list {

@@ -14,10 +14,40 @@ const pdfFilename = locale === "en" ? "/CV.pdf" : `/CV-${locale}.pdf`;
 ---
 
 <a
-  class="pdf-download-btn"
+  class="pdf-download-link"
   aria-label={ariaLabel}
   href={pdfFilename}
   download={`Shashank Agarwal-UX Architect${locale === "en" ? "" : `-${locale}`}-${new Date().getFullYear()}.pdf`}
+  title={label}
 >
-  {label}
+  <span class="pdf-download-link__label">{label}</span>
 </a>
+
+<style>
+  .pdf-download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--muted);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.2s ease;
+  }
+
+  .pdf-download-link:hover {
+    color: var(--accent);
+  }
+
+  .pdf-download-link__label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @media print {
+    .pdf-download-link {
+      display: none !important;
+    }
+  }
+</style>

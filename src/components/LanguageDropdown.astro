@@ -1,0 +1,194 @@
+---
+import type { Locale } from "../i18n/types";
+import { localeLabels, locales } from "../i18n/utils";
+
+interface Props {
+  locale: Locale;
+  ariaLabel: string;
+}
+
+const { locale, ariaLabel } = Astro.props;
+
+function hrefFor(target: Locale): string {
+  if (target === "en") return "/";
+  return `/${target}/`;
+}
+---
+
+<div class="lang-dropdown">
+  <button
+    class="lang-dropdown__trigger"
+    aria-label={ariaLabel}
+    aria-expanded="false"
+    aria-haspopup="menu"
+  >
+    <span class="lang-dropdown__label">{localeLabels[locale]}</span>
+    <span class="lang-dropdown__code">{locale}</span>
+    <svg class="lang-dropdown__icon" viewBox="0 0 24 24" width="16" height="16">
+      <path d="m7 10 5 5 5-5z" fill="currentColor" />
+    </svg>
+  </button>
+
+  <ul class="lang-dropdown__menu" role="menu">
+    {
+      locales.map((l) => (
+        <li role="none">
+          <a
+            class:list={["lang-dropdown__item", { "is-active": l === locale }]}
+            href={hrefFor(l)}
+            hreflang={l}
+            lang={l}
+            role="menuitem"
+            aria-current={l === locale ? "page" : undefined}
+          >
+            <span class="lang-dropdown__item-full">{localeLabels[l]}</span>
+            <span class="lang-dropdown__item-code">{l}</span>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .lang-dropdown {
+    position: relative;
+    display: inline-block;
+    z-index: 200;
+  }
+
+  .lang-dropdown__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: none;
+    border: 0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .lang-dropdown__trigger:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .lang-dropdown__label {
+    display: inline;
+  }
+
+  .lang-dropdown__code {
+    display: none;
+    font-weight: 700;
+  }
+
+  .lang-dropdown__icon {
+    display: inline-block;
+    transition: transform 0.2s ease;
+  }
+
+  .lang-dropdown__trigger[aria-expanded="true"] .lang-dropdown__icon {
+    transform: rotate(180deg);
+  }
+
+  .lang-dropdown__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    margin: 0.5rem 0 0;
+    padding: 0.35rem;
+    list-style: none;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(26, 29, 35, 0.12);
+    min-width: 120px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    pointer-events: none;
+    transition:
+      opacity 0.2s ease,
+      visibility 0.2s ease,
+      transform 0.2s ease;
+    z-index: 300;
+  }
+
+  .lang-dropdown__trigger[aria-expanded="true"] ~ .lang-dropdown__menu {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .lang-dropdown__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+  }
+
+  .lang-dropdown__item:hover {
+    color: var(--accent);
+    background: var(--accent-soft);
+  }
+
+  .lang-dropdown__item.is-active {
+    color: var(--accent);
+    background: var(--accent-soft);
+    pointer-events: none;
+  }
+
+  .lang-dropdown__item-full {
+    display: inline;
+  }
+
+  .lang-dropdown__item-code {
+    display: none;
+    font-weight: 700;
+  }
+
+  @media (max-width: 640px) {
+    .lang-dropdown__label {
+      display: none;
+    }
+
+    .lang-dropdown__code {
+      display: inline;
+    }
+
+    .lang-dropdown__item-full {
+      display: none;
+    }
+
+    .lang-dropdown__item-code {
+      display: inline;
+    }
+
+    .lang-dropdown__menu {
+      min-width: 80px;
+    }
+  }
+
+  @media print {
+    .lang-dropdown {
+      display: none !important;
+    }
+  }
+</style>

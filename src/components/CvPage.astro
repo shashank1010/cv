@@ -1,7 +1,6 @@
 ---
 import type { Locale, Messages } from "../i18n";
-import LanguageSwitcher from "./LanguageSwitcher.astro";
-import PDFDownloadButton from "./PDFDownloadButton.astro";
+import NavMenu from "./NavMenu.astro";
 
 interface Props {
   locale: Locale;
@@ -21,22 +20,7 @@ const buildDate = new Date().toLocaleDateString(locale === "ru" ? "ru-RU" : loca
 const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toString());
 ---
 
-<div class="site-nav-sentinel" aria-hidden="true"></div>
-<div class="site-nav-sticky">
-  <nav class="site-nav" aria-label={t.nav.sectionsAria}>
-    <ul class="site-nav__list">
-      <li><a href="#intro">{t.nav.intro}</a></li>
-      <li><a href="#skills">{t.nav.skills}</a></li>
-      <li><a href="#experience">{t.nav.experience}</a></li>
-      <li><a href="#hobbies">{t.nav.hobbies}</a></li>
-      <li><PDFDownloadButton label={t.nav.download} locale={locale} ariaLabel={`${t.nav.download} CV as PDF`} /></li>
-    </ul>
-  </nav>
-</div>
-
-<div class="lang-switch-sticky">
-  <LanguageSwitcher locale={locale} ariaLabel={t.nav.langAria} />
-</div>
+<NavMenu locale={locale} t={t} />
 
 <main class="page">
   <div class="masthead">
