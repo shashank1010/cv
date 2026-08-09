@@ -1,0 +1,17 @@
+---
+import CvPage from "../components/CvPage.astro";
+import CvLayout from "../layouts/CvLayout.astro";
+import { getMessages, type Locale } from "../i18n";
+
+
+interface Props {
+  locale: Locale;
+}
+
+const locale = Astro.props.locale;
+const t = getMessages(locale);
+---
+
+<CvLayout locale={locale} title={t.meta.title} description={t.meta.description}>
+  <CvPage locale={locale} t={t} />
+</CvLayout>

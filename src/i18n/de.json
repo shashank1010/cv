@@ -1,0 +1,299 @@
+{
+  "meta": {
+    "title": "Shashank Agarwal — UI/UX Tech Architect",
+    "description": "Shashank Agarwal — UI/UX Tech Architect. React, React Native, SolidJS. 13+ Jahre Erfahrung."
+  },
+  "nav": {
+    "sectionsAria": "Seitenabschnitte",
+    "intro": "Einführung",
+    "skills": "Fähigkeiten",
+    "experience": "Erfahrung",
+    "hobbies": "Hobbys",
+    "langAria": "Sprache",
+    "download": "Herunterladen"
+  },
+  "intro": {
+    "name": "Shashank Agarwal",
+    "role": "UI/UX Tech Architect · Lead Frontend Engineer",
+    "tagline": "Ich baue zugängliche, hochperformante Frontends mit React, React Native und SolidJS – mit starker Neigung zu klaren Anforderungen, soliden Tests und durchdachter Architektur."
+  },
+  "contact": {
+    "title": "Kontakt",
+    "aria": "Kontakt",
+    "locationLabel": "Standort",
+    "locationValue": "Minsk, Belarus",
+    "emailLabel": "E-Mail",
+    "email": "agarwalshashank2611@gmail.com",
+    "phoneLabel": "Telefon",
+    "phones": [
+      { "href": "tel:+375299967960", "display": "+375 29 996 79 60" },
+      { "href": "tel:+917208526826", "display": "+91 720 852 6826" }
+    ],
+    "linkedinLabel": "LinkedIn",
+    "linkedinHandle": "@theshashankagarwal",
+    "linkedinHref": "https://www.linkedin.com/in/theshashankagarwal/",
+    "githubLabel": "GitHub",
+    "githubHandle": "@shashank1010",
+    "githubHref": "https://github.com/shashank1010",
+    "preferredLabel": "Bevorzugter Standort",
+    "preferredValue": "Remote (global)"
+  },
+  "profile": {
+    "title": "Profil",
+    "paragraphs": [
+      "Ich bin ein UI/UX-orientierter Frontend-Lead mit mehr als <strong>13 Jahren</strong> Erfahrung beim Aufbau von Web- und Mobile-Produktoberflächen. In jeder Rolle, die ich übernommen habe, befasse ich mich früh mit Anforderungen, plane Funktionen sorgfältig, negotiate API-Verträge mit Backend-Partnern und stelle die Spezifikation in Frage, wenn ein besserer Umfang oder eine bessere Erfahrung möglich ist. Tag für Tag kümmere ich mich am meisten um Frontend-Architektur, Design-Systeme und Performance – und um die Verstärkung von Code-Standards durch rechtzeitige Code-Reviews und Mentoring.",
+      "Bei <strong>Webbee GmbH</strong> leite ich React- und React Native-Arbeiten über <strong>Butlerapp</strong> (Buchungsmanager und CRM) – einschließlich Embeds auf <strong>200+ Websites</strong> – und <strong>TaylorDb</strong> (AI App Builder)."
+    ]
+  },
+  "skills": {
+    "title": "Fähigkeiten",
+    "groups": [
+      {
+        "label": "Kern",
+        "items": ["React", "React Native", "TypeScript", "JavaScript", "Node.js"]
+      },
+      {
+        "label": "Architektur",
+        "items": [
+          "UI/UX-Architektur",
+          "Design Systeme & Komponentenbibliotheken",
+          "API-Vertragsgestaltung",
+          "Zugängliche Frontends",
+          "Hochperformante UI",
+          "Responsive Layouts"
+        ]
+      },
+      {
+        "label": "Status & Daten",
+        "items": [
+          "Redux",
+          "GraphQL",
+          "TanStack Query",
+          "TanStack Router",
+          "React Router"
+        ]
+      },
+      {
+        "label": "Styling",
+        "items": ["CSS-in-JS", "Tailwind"]
+      },
+      {
+        "label": "Qualität",
+        "items": [
+          "Test-Driven Development",
+          "Vitest",
+          "Playwright",
+          "Unit- / Integrations- / E2E-Tests",
+          "Storybook",
+          "Debugging"
+        ]
+      },
+      {
+        "label": "Plattformen",
+        "items": ["Next.js", "Expo", "Reanimated / Gesture Handler", "SolidJS"]
+      },
+      {
+        "label": "Soft Skills",
+        "items": [
+          "Mentoring",
+          "Code Review",
+          "Anforderungsanalyse",
+          "Feature-Planung",
+          "KI-gestützte Technik"
+        ]
+      }
+    ]
+  },
+  "spoken": {
+    "title": "Gesprochene Sprachen",
+    "items": ["Hindi (Muttersprache)", "Englisch (Fließend)", "Russisch (A1)"]
+  },
+  "experience": {
+    "title": "Erfahrung",
+    "jobs": [
+      {
+        "title": "Lead Frontend Engineer",
+        "company": "Webbee GmbH",
+        "dates": "Aug 2020 – Heute",
+        "meta": "Minsk, Belarus",
+        "summary": "Ich leite Frontend-Architektur und Delivery für <strong>Butlerapp</strong> (Buchungsmanager und CRM) und <strong>TaylorDb</strong> (KI-App-Builder). Die folgende Zeitleiste zeigt, wie sich diese Arbeit entwickelt hat.",
+        "phases": [
+          {
+            "title": "Butlerapp Booking Form",
+            "skills": "React 16 · TypeScript · UX-Architektur",
+            "bullets": [
+              "Habe die Legacy-Buchungsformulare als moderne <strong>React- und TypeScript</strong>-Anwendung neu aufgebaut, die weiterhin mit den vorhandenen PHP-APIs kommuniziert.",
+              "Habe einen <strong>Event Cart</strong> entworfen und bereitgestellt, der sauber auf den bereits vorhandenen Daten funktionierte, anstatt ein Backend-Rewrite zu erzwingen."
+            ]
+          },
+          {
+            "title": "SchnellTestButler",
+            "skills": "React Native · Expo · NativeBase · UX-Architektur",
+            "bullets": [
+              "Habe <strong>Butlerapp</strong> mit Scheduling-Flows für Hochvolumen-COVID-Tests erweitert und deckte Buchungen, Queue-Timing und Ergebnisübergabe ab.",
+              "Habe eine React Native Field App mit QR-Check-in und Multi-Account-Zugriff entwickelt; auf ihrem Höhepunkt war sie bei mehr als <strong>1.500</strong> Testzentren in Deutschland in Gebrauch.",
+              "Habe die App im <strong>App Store</strong> und <strong>Google Play</strong> veröffentlicht."
+            ]
+          },
+          {
+            "title": "Butlerapp Dashboard — React Native Migration",
+            "skills": "React Native · Expo · NativeBase",
+            "bullets": [
+              "Habe das klassenbasierte React <strong>Butlerapp Dashboard</strong> zu einer hybriden React Native App auf <strong>Expo</strong> und <strong>NativeBase</strong> migriert und gab dem Produkt dabei ein umfassendes UX-Overhaul.",
+              "Habe ein <strong>View System</strong> von Grund auf entworfen und gebaut, damit Operatoren Filter, Sortierung und Layout als wiederverwendbare Views speichern konnten, und machte die Schnittstelle vollständig responsive.",
+              "Habe <strong>Autodesk BaseTable</strong> übernommen, um Operatoren ein deutlich schnelleres Table-Erlebnis bei großen Datenmengen zu bieten.",
+              "Habe Filter zu <strong>Filter-Chips</strong> umgestaltet mit einem Ranking-Modell, das die am meisten verwendeten Filter zuerst anzeigt.",
+              "Habe Dashboard-Anpassung hinzugefügt, damit jeder Kunde das Produkt an sein eigenes Branding anpassen konnte."
+            ]
+          },
+          {
+            "title": "TaylorDb — KI App Builder",
+            "skills": "React Native · GraphQL · WebSockets · Client-seitige Datenschicht",
+            "bullets": [
+              "Habe <strong>TaylorDb</strong> etwa zwei einhalb Jahre lang geleitet, während es sich vom App-Builder zu einem Airtable-ähnlichen Datenprodukt und schließlich zu einem <strong>KI-App-Builder</strong> entwickelte.",
+              "Habe den Client als lokale Datenbank behandelt: Alle Produktdaten kamen über <strong>GraphQL auf WebSockets</strong> anstatt REST an, daher habe ich eine dedizierte Daten-Loading-Layer und ein Subscription-System gebaut, das lokale States synchron hielt, während ich Race Conditions navigierte, da Events eingingen. Ein Local-First-Cache ließ Leute sofort arbeiten, mit Live-Daten, die sich über Subscriptions einfüllten.",
+              "Habe Mid-Level-Ingenieure eingearbeitet und sie mentoriert, bis sie als unabhängige Seniors agieren konnten.",
+              "Habe die verfügbaren React Native Component Libraries zu dieser Zeit verglichen, dann eine Greenfield Library entworfen und gebaut— react-native-molecules (npm) —um als gemeinsame UI-Grundlage über Produkte zu dienen."
+            ]
+          },
+          {
+            "title": "Butlerapp Dashboard — Upgrades & Grid System",
+            "skills": "React Native · Widget Systems",
+            "bullets": [
+              "Bin zurück zu <strong>Butlerapp Dashboard</strong> für einen Major Upgrade Cycle gekommen, inklusive eines responsiven <strong>Grid Builders</strong> und eine Reihe von Widgets, die vom Backend angetrieben werden.",
+              "Habe Self-Onboarding implementiert, damit eingeloggte User ohne Hand-Held-Setup Wert erreichen konnten.",
+              "Habe einen Junior Developer eingearbeitet, ihn durch tägliche Delivery mentoriert und gründliche Code Reviews durchgeführt, damit Quality hoch blieb, während das Team schneller vorrückte.",
+              "Arbeite derzeit an der Mobile App für diese Produktoberfläche."
+            ]
+          },
+          {
+            "title": "Butlerapp Booking Form — React 19 & Embed Platform",
+            "skills": "React 19 · TypeScript · Embeddable Widgets · Cross-Site Integration",
+            "bullets": [
+              "Habe <strong>Butlerapp Booking Form</strong> um React 19 re-architekturiert, damit die Codebase zukünftige Änderungen sauber aufnehmen konnte, und habe das Formular in <strong>Butlerapp Dashboard</strong> integriert, damit Operatoren in einer kontinuierlichen Erfahrung arbeiten.",
+              "Das Formular läuft jetzt auf mehr als <strong>200 Websites</strong> und bringt <strong>tausende Buchungen jeden Monat</strong> ein. Es kann auf jeder Seite öffnen, die die Booking-Scripts lädt, nicht nur auf einer dedizierten Integrationsseite.",
+              "Habe Offering Widgets gebaut, die um das Formular sitzen—Calendar, Offer Card, Accordion, Table und User Login—damit Host-Sites Inventory in der Form präsentieren können, die sie brauchen."
+            ]
+          }
+        ]
+      },
+      {
+        "title": "UX Lead",
+        "company": "Zycus India Pvt. Ltd.",
+        "dates": "Jan 2018 – Jul 2020",
+        "meta": "Mumbai, India · React · Angular 8",
+        "summary": "Zycus baut eine führende Source-to-Pay-Plattform für Procurement. Ich leitete Frontend-Arbeiten über Produktmodule, trieb Modernisierung von Legacy-Stacks voran und managte ein Team von Frontend-Ingenieuren.",
+        "bullets": [
+          "Habe <strong>React</strong> Plugins gebaut, die Flash und ActionScript in proprietären internen Tools ersetzten, was diese Oberflächen leichter zu warten machte und in modernen Browsern nutzbar machte.",
+          "Habe <strong>CRMS</strong> und <strong>iAnalyse</strong> übernommen, als sie noch auf separaten Stacks lebten – eine PHP-Service mit jQuery/PHP Front-End, die andere eine Java-Service mit jQuery/Java Front-End. Ich leitete den Frontend-Rewrite beider auf <strong>Angular 8</strong>, als Zycus sich auf eine UX-Plattform über das Unternehmen standardisierte.",
+          "Habe ein <strong>COVID Spend Analysis Dashboard</strong> gebaut, das die Kosten eines Unternehmens mit Industrie-Peers verglich, damit Procurement-Teams schnell Ausreißer erkennen konnten. Wir nahmen die Idee von einer zweitägigen Hackathon-POC zur Production in etwa einer Woche.",
+          "Habe ein <strong>Spend Dashboard</strong> mit responsiven <strong>Highcharts</strong> Visualisierungen gebaut, damit Teams Cost-Daten auf Desktop und kleineren Screens erkunden konnten, ohne die Chart-Erfahrung zu verlieren.",
+          "Habe einen Custom <strong>Pivot Table</strong> von Grund auf für <strong>iAnalyse</strong> entworfen und implementiert, geformt um die Analyse-Anforderungen des Produkts, anstatt eines generischen Third-Party-Grids. Er unterstützte Drag-and-Drop-Layout von mehreren Dimensionen und Measures auf beiden Achsen, plus verschachtelte Gruppen mit kollapsibaren Zeilen.",
+          "Habe ein Team von <strong>fünf Frontend-Developern</strong> mentoriert, führte regelmäßige Code Reviews durch, um Quality konsistent zu halten, und bezog sie in technische Design- und Sprint-Planung ein, damit Ownership beim Team lag, nicht nur bei mir."
+        ],
+        "footerLabel": "Schlüsselmodule:",
+        "footer": "Proprietäres Reporting und Datenanalyse, COVID Spend Analysis Dashboard, Spend Dashboard (Highcharts), Custom Pivot Table für iAnalyse"
+      },
+      {
+        "title": "Software Engineer II",
+        "company": "Omnichanneler Technologies Pvt. Ltd.",
+        "dates": "Apr 2017 – Nov 2017",
+        "meta": "Bangalore, India · React · Backbone.js",
+        "summary": "Product Startup, der Point-of-Sale- und Multi-Channel-Inventory-Tools für Einzelhändler baut, die online und offline verkaufen.",
+        "bullets": [
+          "Habe ein Backbone.js Frontend gepflegt und erweitert, neue Feature-APIs unter engen Release-Deadlines zu einer responsiven Web UI verdrahtet.",
+          "Habe einen <strong>B2B POS</strong> Flow gebaut, damit Einzelhändler Bulk-Volume B2B Orders akzeptieren konnten, anstatt sie nur als One-Off Retail Sales zu handhaben.",
+          "Habe <strong>QuickBooks</strong> und <strong>Tally ERP</strong> Onboarding Workflows integriert, damit Kunden ihren Accounting Stack als Teil des Setups verbinden konnten.",
+          "Habe den Rebuild von Key Application Surfaces in <strong>React</strong> geleitet, damit Migrations-Arbeiten zusammen mit neuen Capabilities für Retail-Operatoren landen konnten."
+        ],
+        "footerLabel": "Schlüsselarbeit:",
+        "footer": "B2B POS für Bulk Orders, QuickBooks und Tally ERP Onboarding, angepasste Invoice-Templates und Migration von der Legacy Frontend zu React"
+      },
+      {
+        "title": "Assistant Project Manager",
+        "company": "Unlock Technologies Pvt. Ltd.",
+        "dates": "Sep 2013 – Apr 2017",
+        "meta": "Mumbai, India · jQuery · AJAX · HTML5 · CSS3 · Ionic",
+        "summary": "Services Company, die Corporate Sites, E-Commerce und Web- und Hybrid Mobile Applications für Clients liefert.",
+        "bullets": [
+          "Habe Production Websites und Web Apps mit <strong>jQuery</strong>, <strong>AJAX</strong>, <strong>HTML5 APIs</strong> und <strong>CSS3</strong> vom Requirements und Wireframes bis zur Browser-Ready Delivery geliefert.",
+          "Habe die Mobile Application Line des Unternehmens in <strong>Ionic</strong> gebaut: <strong>PayPointZ Wallet</strong> und eine WebView App für ein Online-Auktionskunstunternehmen – das Portfolio erweitert und einen neuen Revenue Stream für Client Work eröffnet.",
+          "Habe mehrere E-Commerce-Templates für die <strong>Unlock Commerce</strong> Vertical gebaut, dem Team wiederverwendbare Storefront Starting Points für Client Work gegeben.",
+          "Habe moderne Web-Praktiken in die Organisation eingeführt und Version Control von VSS zu selbst gehosteten <strong>Git</strong> verlagert.",
+          "Habe Customer Onboarding und Training durchgeführt, Goals für Multi-Functional Teams gesetzt und Delivery bei vereinbarter Quality und Timelines gehalten."
+        ],
+        "footerLabel": "Ausgewählte Projekte:",
+        "footer": "PayPointZ Wallet, Intro (Online-Identität) und Unlock Commerce E-Commerce-Templates"
+      }
+    ]
+  },
+  "projects": {
+    "title": "Nebenprojekte & Bibliotheken",
+    "items": [
+      {
+        "name": "json-tree-editor",
+        "href": "https://github.com/binaryoperations/json-tree-editor",
+        "tag": "Nebenprojekt",
+        "stack": "SolidJS · TypeScript · Web Component",
+        "description": "Ein leistungsstarker JSON-Tree-Editor für Solid-Apps und über eine Web Component für andere Stacks. Ich leitete einen KI-gestützten Build mit Fokus auf große Bäume und einer einfachen Regel: Der Quellstring bleibt die einzige Dokumentwahrheit."
+      },
+      {
+        "name": "json-schema-form",
+        "href": "https://www.npmjs.com/package/@binaryoperations/json-schema-form",
+        "tag": "Nebenprojekt",
+        "stack": "React · JSON Schema · UI Schema · TypeScript",
+        "description": "Ein datengesteuerter Formular-Builder für React: JSON Schema für Validierung, ein UI Schema für Grid-Layout und benutzerdefinierte Renderer, wenn Sie volle Kontrolle benötigen. JS- und SolidJS-Ports sind in Arbeit."
+      },
+      {
+        "name": "react-native-molecules",
+        "href": "https://www.npmjs.com/package/react-native-molecules",
+        "tag": "mit Webbee",
+        "stack": "React Native · TypeScript",
+        "description": "Eine freigegebene React Native-Komponentenbibliothek, die ich während der Leitung von TaylorDb entwarf; sie wurde zur UI-Grundlage mehrerer Produkte."
+      },
+      {
+        "name": "Dashboard",
+        "tag": "Hobby, in Arbeit",
+        "stack": "SolidJS · TanStack Query · Router",
+        "description": "Ein Hobby-Workflow-Engine- und ERP-ähnlicher Builder, der mit vordefinierten Modulen ausgeliefert werden soll. Endbenutzer können ihre eigenen Dashboards, Berichtabschnitte und benutzerdefinierten Workflows auf ihre Datensätze abstimmen."
+      }
+    ]
+  },
+  "education": {
+    "title": "Ausbildung",
+    "degree": "Bachelor of Science in Informationstechnologie",
+    "school": "University of Mumbai, Mumbai, Indien",
+    "year": "2009"
+  },
+  "cta": {
+    "title": "Lass uns sprechen",
+    "lead": "Lass uns gemeinsam eine virtuelle Tasse Chai oder Kaffee trinken – wähle einen Weg unten und sag hallo.",
+    "aria": "Kontakt aufnehmen",
+    "poke": "Lass uns sprechen",
+    "pokeAria": "Zu 'Lass uns sprechen' springen",
+    "cards": [
+      {
+        "label": "Stellen Sie mich ein",
+        "text": "Haben Sie eine Anforderung, die Sie besprechen möchten? Lassen Sie uns erkunden, wie ich Ihnen bei der Umsetzung helfen kann.",
+        "subject": "Rolle oder Anforderung zum Besprechen"
+      },
+      {
+        "label": "Mit mir debuggen",
+        "text": "Brauchen Sie ein drittes Auge bei einem Frontend-Problem? Kontaktieren Sie mich für eine fokussierte Debug-Sitzung.",
+        "subject": "Brauche ein zweites Augenpaar"
+      },
+      {
+        "label": "Zusammenarbeiten",
+        "text": "Möchten Sie etwas Spaßiges bauen – Open Source, Experimente oder eine Nebenaufgabe? Lass uns zusammenarbeiten.",
+        "subject": "Lass uns an etwas Spaßigem zusammenarbeiten"
+      }
+    ]
+  },
+  "credits": {
+    "aria": "Gutschriften",
+    "copyright": "© {{buildYear}} Shashank Agarwal",
+    "builtWith": "Gebaut mit",
+    "grok": "Grok",
+    "lastUpdated": "Zuletzt aktualisiert am 9. August 2026"
+  }
+}

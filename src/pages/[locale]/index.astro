@@ -1,0 +1,14 @@
+---
+import IndexLayout from "../../layouts/index.astro";
+import { locales, isLocale, type Locale } from "../../i18n";
+
+export async function getStaticPaths() {
+  return locales.map((locale) => ({
+    params: { locale },
+  }));
+}
+
+const locale = Astro.params.locale as Locale;
+---
+
+<IndexLayout locale={locale} />

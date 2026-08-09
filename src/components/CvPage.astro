@@ -1,0 +1,241 @@
+---
+import type { Locale, Messages } from "../i18n";
+import LanguageSwitcher from "./LanguageSwitcher.astro";
+import PDFDownloadButton from "./PDFDownloadButton.astro";
+
+interface Props {
+  locale: Locale;
+  t: Messages;
+}
+
+const { locale, t } = Astro.props;
+const mail = t.contact.email;
+
+// Format build date and substitute year in copyright template
+const currentYear = new Date().getFullYear();
+const buildDate = new Date().toLocaleDateString(locale === "ru" ? "ru-RU" : locale === "de" ? "de-DE" : "en-GB", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
+const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toString());
+---
+
+<div class="site-nav-sentinel" aria-hidden="true"></div>
+<div class="site-nav-sticky">
+  <nav class="site-nav" aria-label={t.nav.sectionsAria}>
+    <ul class="site-nav__list">
+      <li><a href="#intro">{t.nav.intro}</a></li>
+      <li><a href="#skills">{t.nav.skills}</a></li>
+      <li><a href="#experience">{t.nav.experience}</a></li>
+      <li><a href="#hobbies">{t.nav.hobbies}</a></li>
+      <li><PDFDownloadButton label={t.nav.download} locale={locale} ariaLabel={`${t.nav.download} CV as PDF`} /></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="lang-switch-sticky">
+  <LanguageSwitcher locale={locale} ariaLabel={t.nav.langAria} />
+</div>
+
+<main class="page">
+  <div class="masthead">
+    <header class="intro" id="intro">
+      <h1>{t.intro.name}</h1>
+      <p class="intro__role">{t.intro.role}</p>
+      <p class="intro__tagline">{t.intro.tagline}</p>
+    </header>
+
+    <aside class="contact" aria-label={t.contact.aria}>
+      <h2 class="contact__title">{t.contact.title}</h2>
+      <ul class="contact__list">
+        <li>
+          <span class="label">{t.contact.locationLabel}</span>
+          <span class="contact__value">{t.contact.locationValue}</span>
+        </li>
+        <li>
+          <span class="label">{t.contact.emailLabel}</span>
+          <a class="contact__value" href={`mailto:${mail}`}>{mail}</a>
+        </li>
+        <li>
+          <span class="label">{t.contact.phoneLabel}</span>
+          <span class="contact__value contact__phones">
+            {
+              t.contact.phones.map((p) => (
+                <a href={p.href}>{p.display}</a>
+              ))
+            }
+          </span>
+        </li>
+        <li>
+          <span class="label">{t.contact.linkedinLabel}</span>
+          <a
+            class="contact__value contact__handle"
+            href={t.contact.linkedinHref}>{t.contact.linkedinHandle}</a
+          >
+        </li>
+        <li>
+          <span class="label">{t.contact.githubLabel}</span>
+          <a class="contact__value contact__handle" href={t.contact.githubHref}
+            >{t.contact.githubHandle}</a
+          >
+        </li>
+        <li>
+          <span class="label">{t.contact.preferredLabel}</span>
+          <span class="contact__value">{t.contact.preferredValue}</span>
+        </li>
+      </ul>
+    </aside>
+
+    <section class="profile" aria-labelledby="profile-heading">
+      <h2 id="profile-heading" class="section-title">{t.profile.title}</h2>
+      {t.profile.paragraphs.map((p) => <p set:html={p} />)}
+    </section>
+  </div>
+
+  <section id="skills" aria-labelledby="skills-heading">
+    <h2 id="skills-heading" class="section-title">{t.skills.title}</h2>
+    <div class="skills">
+      {
+        t.skills.groups.map((group) => (
+          <div class="skills__row">
+            <div class="skills__label">{group.label}</div>
+            <ul class="skills__items">
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="languages-heading">
+    <h2 id="languages-heading" class="section-title">{t.spoken.title}</h2>
+    <ul class="skills__items languages">
+      {t.spoken.items.map((item) => <li>{item}</li>)}
+    </ul>
+  </section>
+
+  <section id="experience" aria-labelledby="experience-heading">
+    <h2 id="experience-heading" class="section-title">{t.experience.title}</h2>
+
+    {
+      t.experience.jobs.map((job, jobIndex) => (
+        <article class:list={["job", { "job--primary": jobIndex === 0 }]}>
+          <div class="job__head">
+            <h3 class="job__title">
+              {job.title} · <span class="job__company">{job.company}</span>
+            </h3>
+            <span class="job__dates">{job.dates}</span>
+          </div>
+          <p class="job__meta">{job.meta}</p>
+          <p class="job__summary" set:html={job.summary} />
+
+          {job.phases && (
+            <ol class="timeline">
+              {job.phases.map((phase) => (
+                <li class="phase">
+                  <h4 class="phase__title">{phase.title}</h4>
+                  <p class="phase__skills">{phase.skills}</p>
+                  <ul>
+                    {phase.bullets.map((b) => (
+                      <li set:html={b} />
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {job.bullets && (
+            <ul>
+              {job.bullets.map((b) => (
+                <li set:html={b} />
+              ))}
+            </ul>
+          )}
+
+          {job.footer && (
+            <p class="job__projects">
+              <strong>{job.footerLabel}</strong> {job.footer}
+            </p>
+          )}
+        </article>
+      ))
+    }
+  </section>
+
+  <section id="hobbies" aria-labelledby="work-heading">
+    <h2 id="work-heading" class="section-title">{t.projects.title}</h2>
+    <div class="projects">
+      {
+        t.projects.items.map((project) => (
+          <article class="project">
+            <div class="project__head">
+              <h3 class="project__name">
+                {project.href ? (
+                  <a href={project.href}>{project.name}</a>
+                ) : (
+                  project.name
+                )}
+                {project.tag && (
+                  <span class="project__tag">{project.tag}</span>
+                )}
+              </h3>
+              <span class="project__stack">{project.stack}</span>
+            </div>
+            <p>{project.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section aria-labelledby="education-heading">
+    <h2 id="education-heading" class="section-title">{t.education.title}</h2>
+    <div class="edu">
+      <div>
+        <p class="edu__degree">{t.education.degree}</p>
+        <p class="edu__school">{t.education.school}</p>
+      </div>
+      <span class="edu__year">{t.education.year}</span>
+    </div>
+  </section>
+</main>
+
+<aside class="cta" id="lets-talk" aria-label={t.cta.aria}>
+  <div class="cta__inner">
+    <h2 class="cta__title">{t.cta.title}</h2>
+    <p class="cta__lead">{t.cta.lead}</p>
+    <ul class="cta__list">
+      {
+        t.cta.cards.map((card) => (
+          <li>
+            <a
+              class="cta__card"
+              href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
+            >
+              <span class="cta__label">{card.label}</span>
+              <span class="cta__text">{card.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</aside>
+
+<footer class="credits" aria-label={t.credits.aria}>
+  <p class="credits__item">{copyright}</p>
+  <p class="credits__item">
+    {t.credits.builtWith}{" "}
+    <a href="https://grok.com" rel="noopener noreferrer">{t.credits.grok}</a>
+  </p>
+  <p class="credits__item">{t.credits.lastUpdated} {buildDate}</p>
+</footer>
+
+<a class="cta-poke" href="#lets-talk" aria-label={t.cta.pokeAria}>
+  {t.cta.poke}
+</a>

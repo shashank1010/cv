@@ -1,0 +1,23 @@
+---
+import type { Locale } from "../i18n/types";
+
+interface Props {
+  label: string;
+  ariaLabel: string;
+  locale: Locale;
+}
+
+const { label, ariaLabel, locale } = Astro.props;
+
+// Map locale to PDF filename
+const pdfFilename = locale === "en" ? "/CV.pdf" : `/CV-${locale}.pdf`;
+---
+
+<a
+  class="pdf-download-btn"
+  aria-label={ariaLabel}
+  href={pdfFilename}
+  download={`Shashank Agarwal-UX Architect${locale === "en" ? "" : `-${locale}`}-${new Date().getFullYear()}.pdf`}
+>
+  {label}
+</a>

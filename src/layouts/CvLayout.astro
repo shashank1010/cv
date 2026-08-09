@@ -1,0 +1,44 @@
+---
+import "../styles/fonts.css";
+import "../styles/cv.css";
+import type { Locale } from "../i18n";
+import { locales } from "../i18n";
+import PostHog from '../components/posthog.astro'
+
+
+interface Props {
+  locale: Locale;
+  title: string;
+  description: string;
+}
+
+const { locale, title, description } = Astro.props;
+---
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- <PostHog /> -->
+
+    {
+      locales.map((l) => (
+        <link
+          rel="alternate"
+          hreflang={l}
+          href={new URL(`/${l}/`, Astro.site ?? "https://example.com").pathname}
+        />
+      ))
+    }
+  </head>
+  <body>
+    <slot />
+    <script>
+      import { initCvInteractions } from "../scripts/cv-interactions";
+      initCvInteractions();
+    </script>
+  </body>
+</html>
