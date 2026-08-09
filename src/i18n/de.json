@@ -172,7 +172,7 @@
             "bullets": [
               "Habe <strong>Butlerapp Booking Form</strong> um React 19 re-architekturiert, damit die Codebase zukünftige Änderungen sauber aufnehmen konnte, und habe das Formular in <strong>Butlerapp Dashboard</strong> integriert, damit Operatoren in einer kontinuierlichen Erfahrung arbeiten.",
               "Das Formular läuft jetzt auf mehr als <strong>200 Websites</strong> und bringt <strong>tausende Buchungen jeden Monat</strong> ein. Es kann auf jeder Seite öffnen, die die Booking-Scripts lädt, nicht nur auf einer dedizierten Integrationsseite.",
-              "Habe Offering Widgets gebaut, die um das Formular sitzen—Calendar, Offer Card, Accordion, Table und User Login—damit Host-Sites Inventory in der Form präsentieren können, die sie brauchen."
+              "Baue Cross-Domain einbettbare Widgets, die um das Formular sitzen—Calendar, Offer Card, Accordion, Table und User Login—damit Host-Sites Inventory in der Form präsentieren können, die sie brauchen."
             ]
           }
         ]
@@ -230,6 +230,13 @@
   "projects": {
     "title": "Nebenprojekte & Bibliotheken",
     "items": [
+      {
+        "name": "shashankagarwal.dev",
+        "href": "https://shashankagarwal.dev",
+        "tag": "dieses Projekt",
+        "stack": "Astro · Puppeteer · TypeScript · CSS Grid",
+        "description": "Mehrsprachiger Lebenslauf mit Generierung von PDFs zur Build-Zeit. Verfügt über ein responsives Design, CSS-Grid-Layouts, die perfekt in PDFs gerendert werden, lokale Schriftarten und automatische Bereitstellung auf Cloudflare Pages über GitHub Actions. Verfügbar auf Englisch, Deutsch und Russisch."
+      },
       {
         "name": "json-tree-editor",
         "href": "https://github.com/binaryoperations/json-tree-editor",

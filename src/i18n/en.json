@@ -172,7 +172,7 @@
             "bullets": [
               "Re-architected <strong>Butlerapp Booking Form</strong> around React 19 so the codebase could absorb future change cleanly, and integrated the form into <strong>Butlerapp Dashboard</strong> so operators work in one continuous experience.",
               "The form now runs on more than <strong>200 websites</strong> and brings in <strong>thousands of bookings each month</strong>. It can open on any page that loads the booking scripts, not only a dedicated integration page.",
-              "Built offering widgets that sit around the form—calendar, offer card, accordion, table, and user login—so host sites can present inventory in the shape they need."
+              "Build cross-domain embeddable widgets that sit around the form—calendar, offer card, accordion, table, and user login—so host sites can present inventory in the shape they need."
             ]
           }
         ]
@@ -230,6 +230,13 @@
   "projects": {
     "title": "Side projects & libraries",
     "items": [
+      {
+        "name": "shashankagarwal.dev",
+        "href": "https://shashankagarwal.dev",
+        "tag": "this project",
+        "stack": "Astro · Puppeteer · TypeScript · CSS Grid",
+        "description": "Multi-language CV with build-time PDF generation. Features responsive design, CSS Grid layouts that render perfectly in PDF, local fonts, and automatic deployment to Cloudflare Pages via GitHub Actions. Available in English, Deutsch, and Русский."
+      },
       {
         "name": "json-tree-editor",
         "href": "https://github.com/binaryoperations/json-tree-editor",
