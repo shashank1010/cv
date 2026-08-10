@@ -13,23 +13,28 @@ function hrefFor(target: Locale): string {
   if (target === "en") return "/";
   return `/${target}/`;
 }
+
+function codeFor(l: Locale): string {
+  return l.toUpperCase();
+}
 ---
 
 <div class="lang-dropdown">
   <button
+    type="button"
     class="lang-dropdown__trigger"
-    aria-label={ariaLabel}
-    aria-expanded="false"
+    id="lang-menu-trigger"
+    popovertarget="lang-menu"
     aria-haspopup="menu"
+    aria-label={ariaLabel}
   >
-    <span class="lang-dropdown__label">{localeLabels[locale]}</span>
-    <span class="lang-dropdown__code">{locale}</span>
-    <svg class="lang-dropdown__icon" viewBox="0 0 24 24" width="16" height="16">
+    <span class="lang-dropdown__code">{codeFor(locale)}</span>
+    <svg class="lang-dropdown__icon" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
       <path d="m7 10 5 5 5-5z" fill="currentColor" />
     </svg>
   </button>
 
-  <ul class="lang-dropdown__menu" role="menu">
+  <ul id="lang-menu" class="lang-dropdown__menu" popover role="menu">
     {
       locales.map((l) => (
         <li role="none">
@@ -41,8 +46,8 @@ function hrefFor(target: Locale): string {
             role="menuitem"
             aria-current={l === locale ? "page" : undefined}
           >
-            <span class="lang-dropdown__item-full">{localeLabels[l]}</span>
-            <span class="lang-dropdown__item-code">{l}</span>
+            <span class="lang-dropdown__item-code" aria-hidden="true">{codeFor(l)}</span>
+            <span class="lang-dropdown__item-name">{localeLabels[l]}</span>
           </a>
         </li>
       ))
@@ -57,91 +62,72 @@ function hrefFor(target: Locale): string {
     z-index: 200;
   }
 
+  /* Type/chrome match menu items via cv.css — layout + anchor only here */
   .lang-dropdown__trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.3rem 0.65rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--muted);
-    background: none;
-    border: 0;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    anchor-name: --lang-menu;
   }
 
-  .lang-dropdown__trigger:hover {
-    color: var(--accent);
-    background: var(--accent-soft);
-  }
-
-  .lang-dropdown__label {
-    display: inline;
-  }
-
+  /* Always visible on the trigger — same weight as other nav items */
   .lang-dropdown__code {
-    display: none;
-    font-weight: 700;
+    display: inline-block;
+    font-weight: inherit;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
   }
 
   .lang-dropdown__icon {
     display: inline-block;
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-inline-end: -6px;
     transition: transform 0.2s ease;
   }
 
-  .lang-dropdown__trigger[aria-expanded="true"] .lang-dropdown__icon {
+  .lang-dropdown:has(:popover-open) .lang-dropdown__icon {
     transform: rotate(180deg);
   }
 
   .lang-dropdown__menu {
+    inset: unset;
+    margin: 0;
     position: absolute;
-    top: 100%;
-    right: 0;
-    margin: 0.5rem 0 0;
+    position-anchor: --lang-menu;
+    top: anchor(bottom);
+    right: anchor(right);
+    margin-top: 0.5rem;
     padding: 0.35rem;
     list-style: none;
-    background: #fff;
+    background: var(--card-bg);
     border: 1px solid var(--line);
     border-radius: 4px;
-    box-shadow: 0 4px 12px rgba(26, 29, 35, 0.12);
-    min-width: 120px;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-4px);
-    pointer-events: none;
-    transition:
-      opacity 0.2s ease,
-      visibility 0.2s ease,
-      transform 0.2s ease;
-    z-index: 300;
+    box-shadow: 0 4px 12px rgba(var(--shadow-ink), 0.12);
+    min-width: 9.5rem;
   }
 
-  .lang-dropdown__trigger[aria-expanded="true"] ~ .lang-dropdown__menu {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    transform: translateY(0);
+  .lang-dropdown__menu:popover-open {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
   }
 
   .lang-dropdown__item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
+    justify-content: flex-start;
+    gap: 0.45rem;
     width: 100%;
-    padding: 0.4rem 0.5rem;
+    padding: 0.3rem 0.4rem;
     font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: none;
     color: var(--muted);
     text-decoration: none;
     border-radius: 4px;
-    transition: all 0.2s ease;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   .lang-dropdown__item:hover {
@@ -155,35 +141,31 @@ function hrefFor(target: Locale): string {
     pointer-events: none;
   }
 
-  .lang-dropdown__item-full {
-    display: inline;
-  }
-
+  /* Code chip — compact “avatar” next to the name */
   .lang-dropdown__item-code {
-    display: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    min-width: 1.45rem;
+    width: 1.45rem;
+    height: 1.25rem;
+    padding: 0 0.25rem;
+    font-size: 0.62rem;
     font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
+    border-radius: 3px;
+    line-height: 1;
   }
 
-  @media (max-width: 640px) {
-    .lang-dropdown__label {
-      display: none;
-    }
-
-    .lang-dropdown__code {
-      display: inline;
-    }
-
-    .lang-dropdown__item-full {
-      display: none;
-    }
-
-    .lang-dropdown__item-code {
-      display: inline;
-    }
-
-    .lang-dropdown__menu {
-      min-width: 80px;
-    }
+  .lang-dropdown__item-name {
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: inherit;
   }
 
   @media print {
