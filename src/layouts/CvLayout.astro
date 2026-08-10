@@ -21,8 +21,18 @@ const { locale, title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <!-- Apply theme cookie before paint (missing = follow prefers-color-scheme) -->
+    <script is:inline>
+      (() => {
+        const m = document.cookie.match(/(?:^|;\s*)theme=([^;]*)/);
+        const t = m ? decodeURIComponent(m[1]) : null;
+        if (t === "light" || t === "dark") {
+          document.documentElement.dataset.theme = t;
+        }
+      })();
+    </script>
 
-    <!-- <PostHog /> -->
+    <PostHog />
 
     {
       locales.map((l) => (

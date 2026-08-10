@@ -1,9 +1,44 @@
-/** Client-side only: sticky nav fallback + CTA poke visibility + language switcher visibility */
+/** Client-side only: sticky nav fallback + CTA poke + locale cookie + theme */
+
+const THEME_KEY = "theme";
+/** 7 days */
+const THEME_MAX_AGE = 7 * 24 * 60 * 60;
 
 export function initCvInteractions() {
   initStickyNavFallback();
   initCtaPoke();
-  initLanguageDropdown();
+  initLocaleCookie();
+  initThemeToggle();
+}
+
+type Theme = "light" | "dark";
+
+/** Effective theme: data-theme if set, else OS preference. */
+function effectiveTheme(): Theme {
+  const forced = document.documentElement.dataset.theme;
+  if (forced === "light" || forced === "dark") return forced;
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function applyTheme(theme: Theme) {
+  document.documentElement.dataset.theme = theme;
+  document.cookie =
+    `${THEME_KEY}=${encodeURIComponent(theme)}; Path=/; Max-Age=${THEME_MAX_AGE}; SameSite=Lax`;
+}
+
+function initThemeToggle() {
+  const buttons = document.querySelectorAll<HTMLButtonElement>(
+    "[data-theme-toggle]",
+  );
+  if (!buttons.length) return;
+
+  buttons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyTheme(effectiveTheme() === "dark" ? "light" : "dark");
+    });
+  });
 }
 
 function initStickyNavFallback() {
@@ -33,92 +68,35 @@ function initStickyNavFallback() {
 
 function initCtaPoke() {
   const poke = document.querySelector(".cta-poke");
-  const label = document.querySelector(".cta__title");
-  if (!poke || !label || typeof IntersectionObserver === "undefined") {
+  const cta = document.querySelector(".cta");
+  if (!poke || !cta || typeof IntersectionObserver === "undefined") {
     return;
   }
 
-  const observer = new IntersectionObserver(
+  new IntersectionObserver(
     ([entry]) => {
-      poke.classList.toggle("is-hidden", entry.isIntersecting);
-      poke.setAttribute("aria-hidden", entry.isIntersecting ? "true" : "false");
-      if (entry.isIntersecting) {
+      const hide = entry.intersectionRatio >= 0.33;
+      poke.classList.toggle("is-hidden", hide);
+      poke.setAttribute("aria-hidden", hide ? "true" : "false");
+      if (hide) {
         poke.setAttribute("tabindex", "-1");
       } else {
         poke.removeAttribute("tabindex");
       }
     },
-    { root: null, threshold: 0, rootMargin: "0px" },
-  );
-
-  observer.observe(label);
+    { root: null, threshold: [0, 0.33, 0.66, 1], rootMargin: "0px" },
+  ).observe(cta);
 }
 
-function initLanguageDropdown() {
-  // Handle dropdown menu toggle
-  const triggers = document.querySelectorAll(".lang-dropdown__trigger");
-
-  triggers.forEach((trigger) => {
-    trigger.addEventListener("click", (e) => {
-      e.preventDefault();
-      const isExpanded = trigger.getAttribute("aria-expanded") === "true";
-      trigger.setAttribute("aria-expanded", String(!isExpanded));
-    });
-  });
-
-  // Close dropdown when clicking outside
-  document.addEventListener("click", (e) => {
-    const dropdowns = document.querySelectorAll(".lang-dropdown");
-    dropdowns.forEach((dropdown) => {
-      if (!dropdown.contains(e.target as Node)) {
-        const trigger = dropdown.querySelector(
-          ".lang-dropdown__trigger",
-        ) as HTMLButtonElement;
-        trigger?.setAttribute("aria-expanded", "false");
-      }
-    });
-  });
-
-  // Close dropdown when a language is selected and delay navigation
+/** Persist chosen locale; not used for menu open/close. */
+function initLocaleCookie() {
   const items = document.querySelectorAll(".lang-dropdown__item");
   items.forEach((item) => {
-    item.addEventListener("click", (e) => {
-      e.preventDefault();
-      const dropdown = item.closest(".lang-dropdown");
-      const trigger = dropdown?.querySelector(
-        ".lang-dropdown__trigger",
-      ) as HTMLButtonElement;
-      trigger?.setAttribute("aria-expanded", "false");
-
+    item.addEventListener("click", () => {
       const lang = item.getAttribute("lang");
+      if (!lang) return;
       document.cookie =
-        `locale=${encodeURIComponent(lang!)}; Path=/; Max-Age=31536000; SameSite=Lax`;
-
-      // Wait for menu close animation (300ms) before navigating
-      setTimeout(() => {
-        const href = (item as HTMLAnchorElement).href;
-        if (href) {
-          window.location.href = href;
-        }
-      }, 300);
-    });
-  });
-
-  // Also close hamburger menu when nav links are clicked and delay navigation
-  const navLinks = document.querySelectorAll(".site-nav__list a");
-  navLinks.forEach((link) => {
-    link.addEventListener("click", (e) => {
-      const href = (link as HTMLAnchorElement).href;
-      // Only prevent default for anchor links (section navigation)
-      if (href.includes("#")) {
-        e.preventDefault();
-        const toggle = document.querySelector(
-          ".site-nav__toggle",
-        ) as HTMLButtonElement;
-        toggle?.setAttribute("aria-expanded", "false");
-
-        window.location.hash = (link as HTMLAnchorElement).hash;
-      }
+        `locale=${encodeURIComponent(lang)}; Path=/; Max-Age=86400; SameSite=Lax`;
     });
   });
 }
