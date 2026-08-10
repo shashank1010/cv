@@ -45,7 +45,13 @@ const sectionLinks = [
       {
         sectionLinks.map(({ href, label }) => (
           <li>
-            <a href={href} class="nav-link">
+            <a
+              href={href}
+              class="nav-link"
+              data-ph-event="nav_link_click"
+              data-ph-href={href}
+              data-ph-label={label}
+            >
               {label}
             </a>
           </li>
@@ -58,7 +64,13 @@ const sectionLinks = [
       {
         sectionLinks.map(({ href, label }) => (
           <li>
-            <a href={href} class="nav-link">
+            <a
+              href={href}
+              class="nav-link"
+              data-ph-event="nav_link_click"
+              data-ph-href={href}
+              data-ph-label={label}
+            >
               {label}
             </a>
           </li>
@@ -73,6 +85,7 @@ const sectionLinks = [
         type="button"
         class="site-nav__theme"
         data-theme-toggle
+        data-ph-event="theme_toggle"
         aria-label={t.nav.themeAria}
         title={t.nav.themeAria}
       >
@@ -91,7 +104,13 @@ const sectionLinks = [
           />
         </svg>
       </button>
-      <a class="site-nav__cta" href="#lets-talk" aria-label={t.cta.pokeAria}>
+      <a
+        class="site-nav__cta"
+        href="#lets-talk"
+        aria-label={t.cta.pokeAria}
+        data-ph-event="nav_lets_talk_click"
+        data-ph-href="#lets-talk"
+      >
         {t.nav.letsTalk}
       </a>
     </div>

@@ -45,6 +45,10 @@ function codeFor(l: Locale): string {
             lang={l}
             role="menuitem"
             aria-current={l === locale ? "page" : undefined}
+            data-ph-event="language_change"
+            data-ph-from={locale}
+            data-ph-to={l}
+            data-ph-href={hrefFor(l)}
           >
             <span class="lang-dropdown__item-code" aria-hidden="true">{codeFor(l)}</span>
             <span class="lang-dropdown__item-name">{localeLabels[l]}</span>

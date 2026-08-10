@@ -39,14 +39,27 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
         </li>
         <li>
           <span class="label">{t.contact.emailLabel}</span>
-          <a class="contact__value" href={`mailto:${mail}`}>{mail}</a>
+          <a
+            class="contact__value"
+            href={`mailto:${mail}`}
+            data-ph-event="contact_link_click"
+            data-ph-kind="email"
+            data-ph-href={`mailto:${mail}`}
+            data-ph-label={mail}
+          >{mail}</a>
         </li>
         <li>
           <span class="label">{t.contact.phoneLabel}</span>
           <span class="contact__value contact__phones">
             {
               t.contact.phones.map((p) => (
-                <a href={p.href}>{p.display}</a>
+                <a
+                  href={p.href}
+                  data-ph-event="contact_link_click"
+                  data-ph-kind="phone"
+                  data-ph-href={p.href}
+                  data-ph-label={p.display}
+                >{p.display}</a>
               ))
             }
           </span>
@@ -55,14 +68,23 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
           <span class="label">{t.contact.linkedinLabel}</span>
           <a
             class="contact__value contact__handle"
-            href={t.contact.linkedinHref}>{t.contact.linkedinHandle}</a
-          >
+            href={t.contact.linkedinHref}
+            data-ph-event="contact_link_click"
+            data-ph-kind="linkedin"
+            data-ph-href={t.contact.linkedinHref}
+            data-ph-label={t.contact.linkedinHandle}
+          >{t.contact.linkedinHandle}</a>
         </li>
         <li>
           <span class="label">{t.contact.githubLabel}</span>
-          <a class="contact__value contact__handle" href={t.contact.githubHref}
-            >{t.contact.githubHandle}</a
-          >
+          <a
+            class="contact__value contact__handle"
+            href={t.contact.githubHref}
+            data-ph-event="contact_link_click"
+            data-ph-kind="github"
+            data-ph-href={t.contact.githubHref}
+            data-ph-label={t.contact.githubHandle}
+          >{t.contact.githubHandle}</a>
         </li>
         <li>
           <span class="label">{t.contact.preferredLabel}</span>
@@ -205,6 +227,9 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
             <a
               class="cta__card"
               href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
+              data-ph-event="cta_card_click"
+              data-ph-label={card.label}
+              data-ph-href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
             >
               <span class="cta__label">{card.label}</span>
               <span class="cta__text">{card.text}</span>
@@ -225,6 +250,12 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
   <p class="credits__item">{t.credits.lastUpdated} {buildDate}</p>
 </footer>
 
-<a class="cta-poke" href="#lets-talk" aria-label={t.cta.pokeAria}>
+<a
+  class="cta-poke"
+  href="#lets-talk"
+  aria-label={t.cta.pokeAria}
+  data-ph-event="cta_poke_click"
+  data-ph-href="#lets-talk"
+>
   {t.cta.poke}
 </a>

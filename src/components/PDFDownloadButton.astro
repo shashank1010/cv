@@ -19,6 +19,9 @@ const pdfFilename = locale === "en" ? "/CV.pdf" : `/CV-${locale}.pdf`;
   href={pdfFilename}
   download={`Shashank Agarwal-UX Architect${locale === "en" ? "" : `-${locale}`}-${new Date().getFullYear()}.pdf`}
   title={label}
+  data-ph-event="download_click"
+  data-ph-href={pdfFilename}
+  data-ph-locale={locale}
 >
   <span class="pdf-download-link__label">{label}</span>
 </a>
