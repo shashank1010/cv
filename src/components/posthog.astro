@@ -1,6 +1,6 @@
 ---
 // src/components/posthog.astro
-console.log({ env: import.meta.env.POST_HOG_API_KEY });
+console.log({ env: !!import.meta.env.POST_HOG_API_KEY });
 ---
 {
     import.meta.env.POST_HOG_API_KEY &&
