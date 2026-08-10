@@ -2,6 +2,8 @@
    Screen + print. Export via browser Print → Save as PDF. */
 
 :root {
+  color-scheme: light;
+
   --ink: #1a1d23;
   --ink-soft: #3d4450;
   --muted: #5c6573;
@@ -10,6 +12,15 @@
   --surface: #f6f7f9;
   --accent: #1e4d8c;
   --accent-soft: #e8f0fa;
+  --page-bg: #e8eaee;
+  --card-bg: #fff;
+  --nav-bg: rgba(255, 255, 255, 0.94);
+  --nav-glass-1: rgba(255, 255, 255, 0.72);
+  --nav-glass-2: rgba(255, 255, 255, 0.38);
+  --nav-glass-3: rgba(255, 255, 255, 0.52);
+  --nav-glass-border: rgba(255, 255, 255, 0.55);
+  --nav-glass-inset: rgba(255, 255, 255, 0.75);
+  --shadow-ink: 26, 29, 35;
   --page-max: 820px;
   --font: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", "SF Mono", ui-monospace, monospace;
@@ -23,6 +34,59 @@
   --radius: 6px;
 }
 
+/*
+ * Theme: single source of truth is html[data-theme].
+ * - absent → follow prefers-color-scheme
+ * - "light" | "dark" → forced
+ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --ink: #e8eaee;
+    --ink-soft: #c5cad3;
+    --muted: #9aa3b2;
+    --line: #2a303a;
+    --line-strong: #3d4654;
+    --surface: #1c2128;
+    --accent: #7eb0e8;
+    --accent-soft: rgba(126, 176, 232, 0.14);
+    --page-bg: #0f1216;
+    --card-bg: #171b22;
+    --nav-bg: rgba(23, 27, 34, 0.92);
+    --nav-glass-1: rgba(40, 48, 60, 0.72);
+    --nav-glass-2: rgba(28, 34, 44, 0.55);
+    --nav-glass-3: rgba(35, 42, 54, 0.65);
+    --nav-glass-border: rgba(126, 176, 232, 0.18);
+    --nav-glass-inset: rgba(255, 255, 255, 0.08);
+    --shadow-ink: 0, 0, 0;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --ink: #e8eaee;
+  --ink-soft: #c5cad3;
+  --muted: #9aa3b2;
+  --line: #2a303a;
+  --line-strong: #3d4654;
+  --surface: #1c2128;
+  --accent: #7eb0e8;
+  --accent-soft: rgba(126, 176, 232, 0.14);
+  --page-bg: #0f1216;
+  --card-bg: #171b22;
+  --nav-bg: rgba(23, 27, 34, 0.92);
+  --nav-glass-1: rgba(40, 48, 60, 0.72);
+  --nav-glass-2: rgba(28, 34, 44, 0.55);
+  --nav-glass-3: rgba(35, 42, 54, 0.65);
+  --nav-glass-border: rgba(126, 176, 232, 0.18);
+  --nav-glass-inset: rgba(255, 255, 255, 0.08);
+  --shadow-ink: 0, 0, 0;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
 *,
 *::before,
 *::after {
@@ -34,7 +98,27 @@ html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: 3.5rem;
-  
+}
+
+/* Screen-only scroll snap */
+@media screen {
+  html {
+    scroll-snap-type: y;
+  }
+
+  #intro,
+  #skills,
+  #experience,
+  #hobbies {
+    scroll-snap-align: start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
 }
 
 body {
@@ -43,7 +127,7 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh);
   color: var(--ink);
-  background: #e8eaee;
+  background: var(--page-bg);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -70,21 +154,38 @@ body {
 .site-nav {
   box-sizing: border-box;
   width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
   padding: 0.55rem 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  background: rgba(255, 255, 255, 0.94);
+  background: var(--nav-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  box-shadow: 0 1px 2px rgba(26, 29, 35, 0.04);
+  box-shadow: 0 1px 2px rgba(var(--shadow-ink), 0.04);
   backdrop-filter: blur(10px);
   transition:
+    max-width 0.28s ease,
     box-shadow 0.28s ease,
     border-color 0.28s ease,
     background-color 0.28s ease,
     backdrop-filter 0.28s ease;
+}
+
+/*
+ * Above hamburger breakpoint: sticky shell can grow +24px so the bar
+ * can widen when stuck. Default bar stays at --page-max until stuck.
+ */
+@media (min-width: 851px) {
+  .site-nav-sticky {
+    max-width: calc(var(--page-max) + 24px);
+  }
+
+  .site-nav {
+    max-width: var(--page-max);
+  }
 }
 
 /* Shared “liquid glass” look when stuck */
@@ -93,18 +194,25 @@ body {
     background:
       linear-gradient(
         155deg,
-        rgba(255, 255, 255, 0.72) 0%,
-        rgba(255, 255, 255, 0.38) 42%,
-        rgba(255, 255, 255, 0.52) 100%
+        var(--nav-glass-1) 0%,
+        var(--nav-glass-2) 42%,
+        var(--nav-glass-3) 100%
       );
-    border-color: rgba(255, 255, 255, 0.55);
+    border-color: var(--nav-glass-border);
     box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.75),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.12),
-      0 1px 2px rgba(26, 29, 35, 0.04),
-      0 10px 28px rgba(26, 29, 35, 0.1),
-      0 4px 12px rgba(30, 77, 140, 0.06);
+      inset 0 1px 0 var(--nav-glass-inset),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+      0 1px 2px rgba(var(--shadow-ink), 0.04),
+      0 10px 28px rgba(var(--shadow-ink), 0.12),
+      0 4px 12px rgba(30, 77, 140, 0.08);
     backdrop-filter: blur(18px) saturate(1.45);
+  }
+
+  /* Widen only while stuck, and only for desktop inline nav */
+  @media (min-width: 851px) {
+    .site-nav {
+      max-width: calc(var(--page-max) + 24px);
+    }
   }
 }
 
@@ -113,59 +221,210 @@ body {
   background:
     linear-gradient(
       155deg,
-      rgba(255, 255, 255, 0.72) 0%,
-      rgba(255, 255, 255, 0.38) 42%,
-      rgba(255, 255, 255, 0.52) 100%
+      var(--nav-glass-1) 0%,
+      var(--nav-glass-2) 42%,
+      var(--nav-glass-3) 100%
     );
-  border-color: rgba(255, 255, 255, 0.55);
+  border-color: var(--nav-glass-border);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.75),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12),
-    0 1px 2px rgba(26, 29, 35, 0.04),
-    0 10px 28px rgba(26, 29, 35, 0.1),
-    0 4px 12px rgba(30, 77, 140, 0.06);
+    inset 0 1px 0 var(--nav-glass-inset),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 2px rgba(var(--shadow-ink), 0.04),
+    0 10px 28px rgba(var(--shadow-ink), 0.12),
+    0 4px 12px rgba(30, 77, 140, 0.08);
   backdrop-filter: blur(18px) saturate(1.45);
 }
 
+@media (min-width: 851px) {
+  .site-nav.is-stuck {
+    max-width: calc(var(--page-max) + 24px);
+  }
+}
+
+/* Shared list reset (no display — desktop vs drawer own their layout) */
 .site-nav__list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 0.15rem 0.25rem;
   margin: 0;
   padding: 0;
   list-style: none;
+  /* Scroll spy: which nav link’s target is currently in view */
+  scroll-target-group: auto;
 }
 
 .site-nav__list > li {
   position: relative;
 }
 
-.site-nav__list :is(a, button) {
-  display: inline-block;
-  padding: 0.3rem 0.65rem;
+/* Section links, download, language — same type + hover chrome */
+.site-nav__list :is(a, button),
+.site-nav__actions .pdf-download-link,
+.site-nav__actions .lang-dropdown__trigger {
+  padding: 0.3rem 0.55rem;
+  font-family: inherit;
   font-size: 0.75rem;
   font-weight: 600;
+  font-style: normal;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  white-space: nowrap;
   color: var(--muted);
   text-decoration: none;
   border-radius: 4px;
   border: 0;
   background: none;
   line-height: var(--lh);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
 }
 
-.site-nav__list :is(a, button):hover {
+.site-nav__list :is(a, button) {
+  display: inline-block;
+}
+
+.site-nav__actions .pdf-download-link {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* Keep flex so label + chevron stay on one row at menu-item height */
+.site-nav__actions .lang-dropdown__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  cursor: pointer;
+}
+
+/* Active section marker (supporting browsers only; progressive enhancement) */
+.site-nav__list a:target-current {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.site-nav__list :is(a, button):hover,
+.site-nav__actions .pdf-download-link:hover,
+.site-nav__actions .lang-dropdown__trigger:hover {
   color: var(--accent);
   background: var(--accent-soft);
   text-decoration: none;
 }
 
-.site-nav__list .lang-dropdown {
-  display: flex;
+/* Desktop inline nav only — never applied to the mobile popover drawer */
+@media (min-width: 851px) {
+  .site-nav__list--desktop {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.15rem 0.25rem;
+  }
+}
+
+/* Nav “Let’s talk” CTA — all-caps label, soft primary fill (not a muted text link) */
+.site-nav__cta {
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
+  padding: 0.35rem 0.55rem;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  line-height: var(--lh);
+  white-space: nowrap;
+  color: var(--accent);
+  background-color: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
+  border-radius: 4px;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.site-nav__cta:hover {
+  color: var(--card-bg);
+  background-color: var(--accent);
+  border-color: var(--accent);
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(30, 77, 140, 0.22);
+}
+
+/* Theme toggle — icon-only control before Let’s talk */
+.site-nav__theme {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem 0.65rem;
+  margin: 0;
+  font: inherit;
+  color: var(--muted);
+  background: none;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: var(--lh);
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.site-nav__theme:hover {
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.site-nav__theme:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.site-nav__theme-icon {
+  display: none;
+  width: 16px;
+  height: 16px;
+}
+
+/* Current effective appearance: sun in light, moon in dark */
+:root[data-theme="light"] .site-nav__theme-icon--sun {
+  display: block;
+}
+
+:root[data-theme="dark"] .site-nav__theme-icon--moon {
+  display: block;
+}
+
+/* No cookie yet — follow system */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .site-nav__theme-icon--sun {
+    display: block;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .site-nav__theme-icon--moon {
+    display: block;
+  }
+}
+
+@media print {
+  .site-nav__theme {
+    display: none !important;
+  }
+}
+
+.site-nav__cta:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media print {
+  .site-nav__cta {
+    display: none !important;
+  }
 }
 
 /* Positive margin: higher values land closer to the document top (see nav clearance) */
@@ -185,8 +444,10 @@ body {
   max-width: var(--page-max);
   margin: 1.25rem auto 2rem;
   padding: 2.75rem 2.5rem 3rem;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(26, 29, 35, 0.06), 0 12px 40px rgba(26, 29, 35, 0.08);
+  background: var(--card-bg);
+  box-shadow:
+    0 1px 3px rgba(var(--shadow-ink), 0.06),
+    0 12px 40px rgba(var(--shadow-ink), 0.08);
   border-radius: var(--radius);
 }
 
@@ -247,7 +508,7 @@ a:hover {
   grid-area: contact;
   align-self: stretch;
   padding: 0.85rem 0.95rem 1rem;
-  background: rgba(246, 247, 249, 0.45); /* almost non-existent surface */
+  background: color-mix(in srgb, var(--surface) 55%, transparent);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
@@ -432,7 +693,7 @@ section {
   gap: 0.25rem 1rem;
   margin: 0 0 0.15rem;
   padding: 0.45rem 0;
-  background: #fff;
+  background: var(--card-bg);
   border-bottom: 1px solid transparent;
   box-shadow: 0 0 0 transparent;
   transition:
@@ -690,11 +951,16 @@ section {
   width: 100%;
   padding: 1.6rem 1.5rem 1.7rem;
   background:
-    linear-gradient(180deg, #f7f9fc 0%, #ffffff 38%, #ffffff 100%);
-  border: 1px solid rgba(30, 77, 140, 0.18);
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--card-bg) 70%, var(--accent-soft)) 0%,
+      var(--card-bg) 38%,
+      var(--card-bg) 100%
+    );
+  border: 1px solid color-mix(in srgb, var(--accent) 18%, transparent);
   border-radius: var(--radius);
   box-shadow:
-    0 1px 2px rgba(26, 29, 35, 0.04),
+    0 1px 2px rgba(var(--shadow-ink), 0.04),
     0 12px 32px rgba(30, 77, 140, 0.08);
 }
 
@@ -710,9 +976,24 @@ section {
 }
 
 .cta__lead {
-  margin: 0 0 1.15rem;
+  margin: 0 0 0.65rem;
   font-size: var(--fs-small);
   color: var(--muted);
+  text-align: center;
+}
+
+.cta__lead:last-of-type {
+  margin-bottom: 1.15rem;
+}
+
+.cta__lang-note {
+  margin: 0 0 1.15rem;
+  max-width: 36em;
+  margin-inline: auto;
+  font-size: var(--fs-small);
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--ink-soft);
   text-align: center;
 }
 
@@ -738,13 +1019,13 @@ section {
   height: 100%;
   min-height: 9rem;
   padding: 1.05rem 1.1rem 0.95rem;
-  border: 1px solid rgba(30, 77, 140, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
   border-radius: calc(var(--radius) + 2px);
-  background: #fff;
+  background: var(--card-bg);
   color: inherit;
   text-decoration: none;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(26, 29, 35, 0.05);
+  box-shadow: 0 2px 8px rgba(var(--shadow-ink), 0.05);
   transition:
     border-color 0.2s ease,
     background-color 0.2s ease,
@@ -755,10 +1036,10 @@ section {
 .cta__card:hover,
 .cta__card:focus-visible {
   border-color: var(--accent);
-  background: linear-gradient(180deg, #ffffff 0%, var(--accent-soft) 100%);
+  background: linear-gradient(180deg, var(--card-bg) 0%, var(--accent-soft) 100%);
   box-shadow:
     0 10px 28px rgba(30, 77, 140, 0.14),
-    0 2px 8px rgba(26, 29, 35, 0.06);
+    0 2px 8px rgba(var(--shadow-ink), 0.06);
   text-decoration: none;
   transform: translateY(-2px);
   outline: none;
@@ -803,19 +1084,19 @@ section {
   color: var(--accent);
   text-decoration: none;
   white-space: nowrap;
-  border: 1px solid rgba(30, 77, 140, 0.22);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   border-bottom: none;
   border-radius: var(--radius) var(--radius) 0 0;
   background:
     linear-gradient(
       165deg,
-      rgba(255, 255, 255, 0.78) 0%,
-      rgba(255, 255, 255, 0.45) 55%,
-      rgba(232, 240, 250, 0.65) 100%
+      var(--nav-glass-1) 0%,
+      var(--nav-glass-2) 55%,
+      var(--accent-soft) 100%
     );
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 -4px 20px rgba(26, 29, 35, 0.08);
+    inset 0 1px 0 var(--nav-glass-inset),
+    0 -4px 20px rgba(var(--shadow-ink), 0.08);
   backdrop-filter: blur(14px) saturate(1.35);
   transition:
     transform 0.28s ease,
@@ -829,7 +1110,7 @@ section {
   color: var(--accent);
   text-decoration: none;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 1px 0 var(--nav-glass-inset),
     0 -6px 24px rgba(30, 77, 140, 0.14);
   outline: none;
 }
@@ -891,7 +1172,8 @@ section {
 
 /* ----- Responsive ----- */
 
-@media (max-width: 640px) {
+/* Compact nav (hamburger + full-bleed bar) — five labels overflow mid-width */
+@media (max-width: 850px) {
   .site-nav-sticky {
     top: 0;
     margin: 0;
@@ -906,7 +1188,7 @@ section {
   }
 
   .job__head {
-    top: 3rem; /* shorter clearance under full-bleed mobile nav */
+    top: 3rem; /* shorter clearance under full-bleed compact nav */
   }
 
   #skills,
@@ -914,6 +1196,27 @@ section {
   #hobbies,
   #lets-talk {
     scroll-margin-top: 1rem;
+  }
+}
+
+/* Full-bleed vs page-max: keep inset from device edges in the mid band */
+@media (min-width: 641px) and (max-width: 850px) {
+  .page {
+    /* Card background: margin clears the viewport edges */
+    margin-inline: 1.25rem;
+    width: auto;
+  }
+
+  .cta,
+  .credits {
+    padding-inline: 1.25rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .cta {
+    margin: 2em;
+    width: auto;
   }
 
   .cta__list {
@@ -949,9 +1252,13 @@ section {
     grid-template-columns: 1fr;
     grid-template-areas:
       "intro"
-      "contact"
-      "profile";
+      "profile"
+      "contact";
     row-gap: 1rem;
+  }
+
+  .masthead .profile {
+    margin-block-start: 0;
   }
 
   .contact {
@@ -967,8 +1274,34 @@ section {
     margin: 14mm 15mm;
   }
 
+  /* Always print / PDF light, regardless of screen theme */
+  :root,
+  :root[data-theme="dark"],
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --ink: #1a1d23;
+    --ink-soft: #3d4450;
+    --muted: #5c6573;
+    --line: #e2e6ec;
+    --line-strong: #c8ced8;
+    --surface: #f6f7f9;
+    --accent: #1e4d8c;
+    --accent-soft: #e8f0fa;
+    --page-bg: #fff;
+    --card-bg: #fff;
+    --nav-bg: #fff;
+    --nav-glass-1: rgba(255, 255, 255, 0.72);
+    --nav-glass-2: rgba(255, 255, 255, 0.38);
+    --nav-glass-3: rgba(255, 255, 255, 0.52);
+    --nav-glass-border: rgba(255, 255, 255, 0.55);
+    --nav-glass-inset: rgba(255, 255, 255, 0.75);
+    --shadow-ink: 26, 29, 35;
+  }
+
   html {
     font-size: 10pt;
+    scroll-padding-top: 0;
+    background: #fff;
   }
 
   body {
@@ -980,6 +1313,7 @@ section {
     max-width: none;
     margin: 0;
     padding: 0;
+    background: #fff;
     box-shadow: none;
     border-radius: 0;
   }
@@ -990,10 +1324,6 @@ section {
   .site-nav-sticky,
   .site-nav-sentinel {
     display: none !important;
-  }
-
-  html {
-    scroll-padding-top: 0;
   }
 
   a {
@@ -1015,6 +1345,10 @@ section {
   .contact__value,
   .contact__phones a {
     color: inherit;
+  }
+
+  .job__head {
+    background: #fff;
   }
 
   section {
