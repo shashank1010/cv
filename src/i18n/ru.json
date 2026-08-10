@@ -9,6 +9,8 @@
     "skills": "Навыки",
     "experience": "Опыт",
     "hobbies": "Хобби",
+    "letsTalk": "Пообщаемся?",
+    "themeAria": "Переключить светлую или тёмную тему",
     "langAria": "Язык",
     "download": "Скачать"
   },
@@ -20,7 +22,7 @@
   "contact": {
     "title": "Контакт",
     "aria": "Контакт",
-    "locationLabel": "Местоположение",
+    "locationLabel": "Локация",
     "locationValue": "Минск, Беларусь",
     "emailLabel": "Электронная почта",
     "email": "agarwalshashank2611@gmail.com",
@@ -35,7 +37,7 @@
     "githubLabel": "GitHub",
     "githubHandle": "@shashank1010",
     "githubHref": "https://github.com/shashank1010",
-    "preferredLabel": "Предпочитаемое местоположение",
+    "preferredLabel": "Предпочтительная локация",
     "preferredValue": "Remote (глобально)"
   },
   "profile": {
@@ -273,11 +275,12 @@
     "year": "2009"
   },
   "cta": {
-    "title": "Давайте поговорим",
+    "title": "Пообщаемся?",
     "lead": "Давайте вместе выпьем виртуальную чашку чая или кофе — выберите путь ниже и скажите привет.",
+    "langNote": "По-русски я могу сказать разве что, как люблю мороз. По делу лучше на английском.",
     "aria": "Связаться",
-    "poke": "Давайте поговорим",
-    "pokeAria": "Перейти к 'Давайте поговорим'",
+    "poke": "Пообщаемся?",
+    "pokeAria": "Пообщаемся?",
     "cards": [
       {
         "label": "Нанять меня",

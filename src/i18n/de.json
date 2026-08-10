@@ -9,8 +9,10 @@
     "skills": "Fähigkeiten",
     "experience": "Erfahrung",
     "hobbies": "Hobbys",
+    "letsTalk": "Schnacken?",
+    "themeAria": "Hell- oder Dunkeldesign umschalten",
     "langAria": "Sprache",
-    "download": "Herunterladen"
+    "download": "Ziehen"
   },
   "intro": {
     "name": "Shashank Agarwal",
@@ -273,11 +275,12 @@
     "year": "2009"
   },
   "cta": {
-    "title": "Lass uns sprechen",
+    "title": "Schnacken?",
     "lead": "Lass uns gemeinsam eine virtuelle Tasse Chai oder Kaffee trinken – wähle einen Weg unten und sag hallo.",
+    "langNote": "Kleiner Hinweis: Deutsch kann ich leider (noch) nicht — Englisch dafür fließend.",
     "aria": "Kontakt aufnehmen",
-    "poke": "Lass uns sprechen",
-    "pokeAria": "Zu 'Lass uns sprechen' springen",
+    "poke": "Schnacken?",
+    "pokeAria": "Zu „Schnacken?“ springen",
     "cards": [
       {
         "label": "Stellen Sie mich ein",

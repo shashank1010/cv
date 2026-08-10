@@ -48,6 +48,8 @@ export type Messages = {
     skills: string;
     experience: string;
     hobbies: string;
+    letsTalk: string;
+    themeAria: string;
     langAria: string;
     download: string;
   };
@@ -103,6 +105,8 @@ export type Messages = {
   cta: {
     title: string;
     lead: string;
+    /** Optional language caveat under the lead (DE/RU); omit or empty for EN. */
+    langNote?: string;
     aria: string;
     poke: string;
     pokeAria: string;
