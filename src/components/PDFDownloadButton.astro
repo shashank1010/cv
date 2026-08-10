@@ -24,25 +24,9 @@ const pdfFilename = locale === "en" ? "/CV.pdf" : `/CV-${locale}.pdf`;
 </a>
 
 <style>
-  .pdf-download-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    color: var(--muted);
-    text-decoration: none;
-    cursor: pointer;
-    transition: color 0.2s ease;
-  }
-
-  .pdf-download-link:hover {
-    color: var(--accent);
-  }
-
+  /* Type + hover match nav items via cv.css (.site-nav__actions .pdf-download-link) */
   .pdf-download-link__label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
+    font: inherit;
   }
 
   @media print {
