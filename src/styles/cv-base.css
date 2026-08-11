@@ -103,12 +103,9 @@ html {
   scroll-padding-top: 3.5rem;
 }
 
-/* Screen-only scroll snap to content blocks + non-primary jobs */
-
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-    scroll-snap-type: none;
   }
 }
 

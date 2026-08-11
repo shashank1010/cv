@@ -2,21 +2,6 @@
 
 @import "./cv-base.css";
 
-/* Scroll snap (screen only) */
-html {
-  scroll-snap-type: y;
-}
-
-.block {
-  scroll-snap-align: start;
-}
-
-/* Primary job rides with the experience block; others snap on their own */
-.job:not(.job--primary) {
-  scroll-snap-align: start;
-  scroll-margin-top: 1.55rem;
-}
-
 /* Extra headings inside the same block (e.g. spoken langs under skills) */
 .block > .section-title ~ .section-title {
   margin-block-start: 1.75rem;
