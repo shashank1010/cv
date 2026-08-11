@@ -69,6 +69,8 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
           <a
             class="contact__value contact__handle"
             href={t.contact.linkedinHref}
+            target="_blank"
+            rel="noopener noreferrer"
             data-ph-event="contact_link_click"
             data-ph-kind="linkedin"
             data-ph-href={t.contact.linkedinHref}
@@ -80,6 +82,8 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
           <a
             class="contact__value contact__handle"
             href={t.contact.githubHref}
+            target="_blank"
+            rel="noopener noreferrer"
             data-ph-event="contact_link_click"
             data-ph-kind="github"
             data-ph-href={t.contact.githubHref}
@@ -177,12 +181,29 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
     <h2 id="work-heading" class="section-title">{t.projects.title}</h2>
     <div class="projects">
       {
-        t.projects.items.map((project) => (
+        t.projects.items.map((project) => {
+          const isSelfSite =
+            !!project.href &&
+            /^https?:\/\/(www\.)?shashankagarwal\.dev\/?$/i.test(project.href);
+          return (
           <article class="project">
             <div class="project__head">
               <h3 class="project__name">
-                {project.href ? (
-                  <a href={project.href}>{project.name}</a>
+                {project.href && isSelfSite ? (
+                  <>
+                    <span class="project__name-text">{project.name}</span>
+                    <a
+                      class="project__link project__link--print"
+                      href={project.href}
+                    >{project.name}</a>
+                  </>
+                ) : project.href ? (
+                  <a
+                    class="project__link"
+                    href={project.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{project.name}</a>
                 ) : (
                   project.name
                 )}
@@ -194,7 +215,8 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
             </div>
             <p>{project.description}</p>
           </article>
-        ))
+          );
+        })
       }
     </div>
   </section>
@@ -245,7 +267,7 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
   <p class="credits__item">{copyright}</p>
   <p class="credits__item">
     {t.credits.builtWith}{" "}
-    <a href="https://grok.com" rel="noopener noreferrer">{t.credits.grok}</a>
+    <a href="https://grok.com" target="_blank" rel="noopener noreferrer">{t.credits.grok}</a>
   </p>
   <p class="credits__item">{t.credits.lastUpdated} {buildDate}</p>
 </footer>

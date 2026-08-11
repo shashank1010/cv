@@ -18,6 +18,7 @@ export function initCvInteractions() {
   initLocaleCookie();
   initThemeToggle();
   initFaviconFocus();
+  initExternalLinks();
   initPhCapture();
 }
 
@@ -141,6 +142,25 @@ function initCtaPoke() {
     },
     { root: null, threshold: [0, 0.33, 0.66, 1], rootMargin: "0px" },
   ).observe(cta);
+}
+
+/** Open all http(s) links in a new tab (content HTML + markup). */
+function initExternalLinks() {
+  document.querySelectorAll<HTMLAnchorElement>("a[href]").forEach((a) => {
+    const href = a.getAttribute("href");
+    if (!href || !/^https?:\/\//i.test(href)) return;
+    // Print-only self-site link: leave alone (hidden on web)
+    if (a.classList.contains("project__link--print")) {
+      return;
+    }
+    a.target = "_blank";
+    const rel = new Set(
+      (a.getAttribute("rel") ?? "").split(/\s+/).filter(Boolean),
+    );
+    rel.add("noopener");
+    rel.add("noreferrer");
+    a.rel = [...rel].join(" ");
+  });
 }
 
 /** Persist chosen locale; not used for menu open/close. */

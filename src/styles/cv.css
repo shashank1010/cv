@@ -879,6 +879,50 @@ section {
   color: var(--accent);
 }
 
+/* Self-site project: plain text on web, real link in print only */
+.project__link--print {
+  display: none;
+}
+
+/* Link chain icon — content, projects, contact (not @handles) */
+.profile a[href^="http"]::before,
+.job a[href^="http"]::before,
+.project a[href^="http"]:not(.project__link--print)::before,
+.contact a[href^="http"]:not(.contact__handle)::before {
+  content: "";
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-inline-end: 0.28em;
+  vertical-align: -0.05em;
+  background-color: currentColor;
+  opacity: 0.7;
+  /* Link / chain icon */
+  --link-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
+  mask: var(--link-icon) center / contain no-repeat;
+  -webkit-mask: var(--link-icon) center / contain no-repeat;
+}
+
+@media print {
+  .profile a[href^="http"]::before,
+  .job a[href^="http"]::before,
+  .project a[href^="http"]::before,
+  .contact a[href^="http"]::before {
+    display: none;
+  }
+
+  .project__name-text {
+    display: none;
+  }
+
+  .project__link--print {
+    display: inline;
+    color: var(--accent);
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+}
+
 .project__tag {
   font-size: 0.72rem;
   font-weight: 500;
