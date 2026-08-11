@@ -3,6 +3,20 @@ const BASE_PATH = "/";
 
 const SUPPORTED_LANGUAGES = new Set(["en", "de", "ru"]);
 
+function getCookie(request, name) {
+  const cookieHeader = request.headers.get("Cookie") || "";
+
+  for (const item of cookieHeader.split(";")) {
+    const [cookieName, ...valueParts] = item.trim().split("=");
+
+    if (cookieName === name) {
+      return decodeURIComponent(valueParts.join("="));
+    }
+  }
+
+  return null;
+}
+
 function getPreferredSupportedLanguage(header) {
   const languages = header
     .split(",")
@@ -47,8 +61,6 @@ function getPreferredSupportedLanguage(header) {
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
-
-  request.headers.set("X-Cloudflare-Function", "functions/index.js");
 
   // If a language cookie exists, do not perform automatic redirection.
   const languageCookie = getCookie(request, "locale");

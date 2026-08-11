@@ -24,5 +24,6 @@ pnpm-debug.log*
 .idea/
 
 .tmp
+.wrangler
 
 CV*.pdf
