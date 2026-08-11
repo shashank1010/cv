@@ -21,7 +21,8 @@ const { locale, title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
-    <!-- Apply theme cookie before paint (missing = follow prefers-color-scheme) -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" id="app-favicon" />
+    <!-- Theme cookie + favicon: smiley when focused, SA SVG when blurred -->
     <script is:inline>
       (() => {
         const m = document.cookie.match(/(?:^|;\s*)theme=([^;]*)/);
@@ -29,6 +30,27 @@ const { locale, title, description } = Astro.props;
         if (t === "light" || t === "dark") {
           document.documentElement.dataset.theme = t;
         }
+        const link = document.getElementById("app-favicon");
+        if (!link) return;
+        const dark =
+          t === "dark" ||
+          (t !== "light" &&
+            window.matchMedia("(prefers-color-scheme: dark)").matches);
+        const sa = dark ? "/favicon-dark.svg" : "/favicon-light.svg";
+        const smiley =
+          "data:image/svg+xml," +
+          encodeURIComponent(
+            '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">😊</text></svg>',
+          );
+        const sync = () => {
+          const focused =
+            document.visibilityState === "visible" && document.hasFocus();
+          link.href = focused ? smiley : sa;
+        };
+        sync();
+        document.addEventListener("visibilitychange", sync);
+        window.addEventListener("focus", sync);
+        window.addEventListener("blur", sync);
       })();
     </script>
 

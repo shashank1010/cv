@@ -17,6 +17,7 @@ export function initCvInteractions() {
   initCtaPoke();
   initLocaleCookie();
   initThemeToggle();
+  initFaviconFocus();
   initPhCapture();
 }
 
@@ -44,10 +45,42 @@ function effectiveTheme(): Theme {
     : "light";
 }
 
+const SMILEY_FAVICON =
+  "data:image/svg+xml," +
+  encodeURIComponent(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">😊</text></svg>`,
+  );
+
+function pageIsFocused(): boolean {
+  return document.visibilityState === "visible" && document.hasFocus();
+}
+
+/** Focused → smiley; blurred/hidden → SA light/dark SVG. */
+function syncFavicon() {
+  const link = document.getElementById("app-favicon") as HTMLLinkElement | null;
+  if (!link) return;
+
+  if (pageIsFocused()) {
+    link.href = SMILEY_FAVICON;
+    return;
+  }
+
+  const theme = effectiveTheme();
+  link.href = theme === "dark" ? "/favicon-dark.svg" : "/favicon-light.svg";
+}
+
 function applyTheme(theme: Theme) {
   document.documentElement.dataset.theme = theme;
   document.cookie =
     `${THEME_KEY}=${encodeURIComponent(theme)}; Path=/; Max-Age=${THEME_MAX_AGE}; SameSite=Lax`;
+  syncFavicon();
+}
+
+function initFaviconFocus() {
+  syncFavicon();
+  document.addEventListener("visibilitychange", syncFavicon);
+  window.addEventListener("focus", syncFavicon);
+  window.addEventListener("blur", syncFavicon);
 }
 
 function initThemeToggle() {

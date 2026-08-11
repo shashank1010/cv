@@ -1336,6 +1336,9 @@ section {
     padding-bottom: 1rem;
     column-gap: 1.25rem;
     grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+      "intro contact"
+      "profile contact";
   }
 
   .contact {
