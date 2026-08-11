@@ -17,7 +17,7 @@ function getCookie(request, name) {
   return null;
 }
 
-function getPreferredSupportedLanguage(header) {
+function getPreferredSupportedLanguage(header, fallback = "en") {
   const languages = header
     .split(",")
     .map((item, index) => {
@@ -55,18 +55,13 @@ function getPreferredSupportedLanguage(header) {
     }
   }
 
-  return "en";
+  return fallback;
 }
 
 export async function onRequest(context) {
   const { request, next } = context;
   const url = new URL(request.url);
 
-  // If a language cookie exists, do not perform automatic redirection.
-  const languageCookie = getCookie(request, "locale");
-  if (languageCookie !== null) {
-    return next();
-  }
 
   const basePath = BASE_PATH.endsWith("/")
     ? BASE_PATH
@@ -84,7 +79,10 @@ export async function onRequest(context) {
   const acceptLanguage =
     request.headers.get("Accept-Language") || "";
 
-  const language = getPreferredSupportedLanguage(acceptLanguage);
+
+  // If a language cookie exists, do not perform automatic redirection.
+  const languageCookie = getCookie(request, "locale") || '';
+  const language = getPreferredSupportedLanguage(languageCookie, '') || getPreferredSupportedLanguage(acceptLanguage);
 
   const destination =
     language === "en"
