@@ -1,6 +1,7 @@
 ---
-import "../styles/fonts.css";
-import "../styles/cv.css";
+import fontsHref from "../styles/fonts.css?url";
+import screenHref from "../styles/cv-screen.css?url";
+import printHref from "../styles/cv-print.css?url";
 import type { Locale } from "../i18n";
 import { locales } from "../i18n";
 import PostHog from '../components/posthog.astro'
@@ -21,6 +22,9 @@ const { locale, title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
+    <link rel="stylesheet" href={fontsHref} />
+    <link rel="stylesheet" href={screenHref} media="screen" />
+    <link rel="stylesheet" href={printHref} media="print" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" id="app-favicon" />
     <!-- Theme cookie + favicon: smiley when focused, SA SVG when blurred -->
     <script is:inline>

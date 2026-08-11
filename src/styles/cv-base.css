@@ -1,3 +1,6 @@
+/* Shared CV foundation — tokens, reset, content + chrome.
+   Imported by cv-screen.css and cv-print.css. */
+
 /* Shashank Agarwal — CV
    Screen + print. Export via browser Print → Save as PDF. */
 
@@ -100,19 +103,7 @@ html {
   scroll-padding-top: 3.5rem;
 }
 
-/* Screen-only scroll snap */
-@media screen {
-  html {
-    scroll-snap-type: y;
-  }
-
-  #intro,
-  #skills,
-  #experience,
-  #hobbies {
-    scroll-snap-align: start;
-  }
-}
+/* Screen-only scroll snap to content blocks + non-primary jobs */
 
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -410,21 +401,9 @@ body {
   }
 }
 
-@media print {
-  .site-nav__theme {
-    display: none !important;
-  }
-}
-
 .site-nav__cta:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
-}
-
-@media print {
-  .site-nav__cta {
-    display: none !important;
-  }
 }
 
 /* Positive margin: higher values land closer to the document top (see nav clearance) */
@@ -438,17 +417,35 @@ body {
   scroll-margin-top: 1.55rem;
 }
 
-/* ----- Page shell ----- */
+/* ----- Page shell: narrow column of self-contained cards ----- */
 
 .page {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  /* Column is the width constraint — children fill it, not the viewport */
+  width: min(100% - 2.5rem, var(--page-max));
   max-width: var(--page-max);
   margin: 1.25rem auto 2rem;
-  padding: 2.75rem 2.5rem 3rem;
+}
+
+/* Each content section is a card (same treatment the old single .page had) */
+.block {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 2.75rem 2.5rem 2.5rem;
   background: var(--card-bg);
+  border: 1px solid color-mix(in srgb, var(--line) 80%, transparent);
   box-shadow:
     0 1px 3px rgba(var(--shadow-ink), 0.06),
     0 12px 40px rgba(var(--shadow-ink), 0.08);
   border-radius: var(--radius);
+}
+
+/* Short single-topic cards (e.g. education) */
+.block--compact {
+  padding-block: 1.5rem;
 }
 
 a {
@@ -471,9 +468,6 @@ a:hover {
   column-gap: 1.5rem;
   row-gap: 1.15rem;
   align-items: start;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1.35rem;
-  border-bottom: 2px solid var(--ink);
 }
 
 .intro {
@@ -584,28 +578,22 @@ a.contact__value:hover {
   color: var(--accent);
 }
 
-.masthead .profile {
+.masthead > .profile {
   grid-area: profile;
-  margin-block-start: 3em;
-  margin-bottom: 0;
+  margin-block-start: 1.5rem;
   min-width: 0;
 }
 
-.masthead .profile p {
+.masthead > .profile p {
   max-width: none;
   margin: 0 0 0.65rem;
 }
 
-.masthead .profile p:last-child {
+.masthead > .profile p:last-child {
   margin-bottom: 0;
 }
 
-/* ----- Sections ----- */
-
-section {
-  margin-block-start: 3em;
-  margin-bottom: 1.45rem;
-}
+/* ----- Section titles (stacked within a block) ----- */
 
 .section-title {
   margin: 0 0 0.65rem;
@@ -879,15 +867,19 @@ section {
   color: var(--accent);
 }
 
-/* Self-site project: plain text on web, real link in print only */
-.project__link--print {
+/*
+ * Self-site project (shashankagarwal.dev):
+ * - Screen: plain text only (no self-link on the live site)
+ * - Print: real <a>, same treatment as other project links (icon included)
+ */
+.project__link--print-only {
   display: none;
 }
 
-/* Link chain icon — content, projects, contact (not @handles) */
+/* Link chain icon — content, projects, contact (not @handles); kept in print */
 .profile a[href^="http"]::before,
 .job a[href^="http"]::before,
-.project a[href^="http"]:not(.project__link--print)::before,
+.project a[href^="http"]::before,
 .contact a[href^="http"]:not(.contact__handle)::before {
   content: "";
   display: inline-block;
@@ -901,26 +893,6 @@ section {
   --link-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71'/%3E%3C/svg%3E");
   mask: var(--link-icon) center / contain no-repeat;
   -webkit-mask: var(--link-icon) center / contain no-repeat;
-}
-
-@media print {
-  .profile a[href^="http"]::before,
-  .job a[href^="http"]::before,
-  .project a[href^="http"]::before,
-  .contact a[href^="http"]::before {
-    display: none;
-  }
-
-  .project__name-text {
-    display: none;
-  }
-
-  .project__link--print {
-    display: inline;
-    color: var(--accent);
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-  }
 }
 
 .project__tag {
@@ -980,13 +952,12 @@ section {
   font-variant-numeric: tabular-nums;
 }
 
-/* ----- CTA (web only) — intentionally unlike Skills (interactive affordance) ----- */
+/* ----- CTA (web only) — same column width as blocks, own surface ----- */
 
-.cta {
+.page > .cta {
   box-sizing: border-box;
   width: 100%;
-  max-width: var(--page-max);
-  margin: 0 auto 2.75rem;
+  margin: 0;
   padding: 0;
 }
 
@@ -1241,28 +1212,20 @@ section {
   #lets-talk {
     scroll-margin-top: 1rem;
   }
+
+  .job:not(.job--primary) {
+    scroll-margin-top: 1rem;
+  }
 }
 
-/* Full-bleed vs page-max: keep inset from device edges in the mid band */
+/* Mid band: page width already uses min(100% - 2.5rem, …); credits need inset */
 @media (min-width: 641px) and (max-width: 850px) {
-  .page {
-    /* Card background: margin clears the viewport edges */
-    margin-inline: 1.25rem;
-    width: auto;
-  }
-
-  .cta,
   .credits {
     padding-inline: 1.25rem;
   }
 }
 
 @media (max-width: 640px) {
-  .cta {
-    margin: 2em;
-    width: auto;
-  }
-
   .cta__list {
     grid-template-columns: 1fr;
   }
@@ -1281,10 +1244,25 @@ section {
   }
 
   .page {
+    width: 100%;
+    max-width: none;
+    gap: 0;
     margin: 0;
-    padding: 1.75rem 1.25rem 2.25rem;
+  }
+
+  .page > .cta {
+    padding: 1.25rem;
+  }
+
+  .block {
+    padding: 1.75rem 1.25rem 2rem;
     border-radius: 0;
+    border: none;
     box-shadow: none;
+  }
+
+  .block + .block {
+    border-top: 1px solid var(--line);
   }
 
   .skills__row {
@@ -1301,7 +1279,7 @@ section {
     row-gap: 1rem;
   }
 
-  .masthead .profile {
+  .masthead > .profile {
     margin-block-start: 0;
   }
 
@@ -1311,149 +1289,3 @@ section {
 }
 
 /* ----- Print / PDF ----- */
-
-@media print {
-  @page {
-    size: A4;
-    margin: 14mm 15mm;
-  }
-
-  /* Always print / PDF light, regardless of screen theme */
-  :root,
-  :root[data-theme="dark"],
-  :root[data-theme="light"] {
-    color-scheme: light;
-    --ink: #1a1d23;
-    --ink-soft: #3d4450;
-    --muted: #5c6573;
-    --line: #e2e6ec;
-    --line-strong: #c8ced8;
-    --surface: #f6f7f9;
-    --accent: #1e4d8c;
-    --accent-soft: #e8f0fa;
-    --page-bg: #fff;
-    --card-bg: #fff;
-    --nav-bg: #fff;
-    --nav-glass-1: rgba(255, 255, 255, 0.72);
-    --nav-glass-2: rgba(255, 255, 255, 0.38);
-    --nav-glass-3: rgba(255, 255, 255, 0.52);
-    --nav-glass-border: rgba(255, 255, 255, 0.55);
-    --nav-glass-inset: rgba(255, 255, 255, 0.75);
-    --shadow-ink: 26, 29, 35;
-  }
-
-  html {
-    font-size: 10pt;
-    scroll-padding-top: 0;
-    background: #fff;
-  }
-
-  body {
-    background: #fff;
-    color: #000;
-  }
-
-  .page {
-    max-width: none;
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    box-shadow: none;
-    border-radius: 0;
-  }
-
-  .cta,
-  .cta-poke,
-  .credits,
-  .site-nav-sticky,
-  .site-nav-sentinel {
-    display: none !important;
-  }
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .masthead {
-    margin-bottom: 1.1rem;
-    padding-bottom: 1rem;
-    column-gap: 1.25rem;
-    grid-template-columns: minmax(0, 1fr) max-content;
-    grid-template-areas:
-      "intro contact"
-      "profile contact";
-  }
-
-  .contact {
-    break-inside: avoid;
-  }
-
-  .contact__value,
-  .contact__phones a {
-    color: inherit;
-  }
-
-  .job__head {
-    background: #fff;
-  }
-
-  section {
-    margin-bottom: 1.1rem;
-  }
-
-  .skills {
-    gap: 0.4rem;
-  }
-
-  .timeline {
-    gap: 0.7rem;
-  }
-
-  .phase {
-    padding: 0.5rem 0 0.5rem 1.25rem;
-  }
-
-  .job:not(.job--primary) ul {
-    font-size: 0.85rem;
-  }
-
-  .job,
-  .project,
-  .edu,
-  .phase {
-    break-inside: avoid;
-  }
-
-  .section-title {
-    break-after: avoid;
-  }
-
-  .job__head {
-    position: static;
-    top: auto;
-    box-shadow: none;
-    border-bottom: none;
-    padding: 0;
-    break-after: avoid;
-  }
-
-  .phase__title {
-    break-after: avoid;
-  }
-
-  .project {
-    background: transparent;
-    border: 1px solid #ccc;
-    border-left: 3px solid var(--accent);
-    padding: 0.55rem 0.7rem;
-  }
-
-  .job--primary {
-    break-inside: auto;
-  }
-
-  .skills__note {
-    display: none;
-  }
-}

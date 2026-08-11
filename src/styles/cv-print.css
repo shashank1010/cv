@@ -1,0 +1,187 @@
+/* CV print / PDF styles — load with media="print" */
+
+@import "./cv-base.css";
+
+/* Print-only rules */
+.site-nav__theme {
+  display: none !important;
+}
+
+.site-nav__cta {
+  display: none !important;
+}
+
+.project__name-text {
+  display: none;
+}
+
+.project__link--print-only {
+  display: inline;
+}
+
+@page {
+  size: A4;
+  /* Extra bottom room for page numbers (Puppeteer footer / browser print) */
+  margin: 14mm 15mm 18mm;
+}
+
+/* Progressive enhancement — supported in some print engines, not all Chromium */
+@page {
+  @bottom-center {
+    content: counter(page) " / " counter(pages);
+    font-family: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    font-size: 8pt;
+    /* Page number dark; total often rendered same color (limited @page styling) */
+    color: #333;
+  }
+}
+
+/* Always print / PDF light, regardless of screen theme */
+:root,
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  color-scheme: light;
+  --ink: #1a1d23;
+  --ink-soft: #3d4450;
+  --muted: #5c6573;
+  --line: #e2e6ec;
+  --line-strong: #c8ced8;
+  --surface: #f6f7f9;
+  --accent: #1e4d8c;
+  --accent-soft: #e8f0fa;
+  --page-bg: #fff;
+  --card-bg: #fff;
+  --nav-bg: #fff;
+  --nav-glass-1: rgba(255, 255, 255, 0.72);
+  --nav-glass-2: rgba(255, 255, 255, 0.38);
+  --nav-glass-3: rgba(255, 255, 255, 0.52);
+  --nav-glass-border: rgba(255, 255, 255, 0.55);
+  --nav-glass-inset: rgba(255, 255, 255, 0.75);
+  --shadow-ink: 26, 29, 35;
+}
+
+html {
+  font-size: 10pt;
+  scroll-padding-top: 0;
+  background: #fff;
+}
+
+body {
+  background: #fff;
+  color: #000;
+}
+
+.page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  /* Between content blocks (flex gap; was 1.1rem) */
+  gap: 2.2rem;
+}
+
+.block {
+  padding: 0;
+  background: #fff;
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
+
+.cta,
+.cta-poke,
+.credits,
+.site-nav-sticky,
+.site-nav-sentinel {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.masthead {
+  column-gap: 1.25rem;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  grid-template-areas:
+    "intro contact"
+    "profile contact";
+}
+
+.contact {
+  break-inside: avoid;
+}
+
+.contact__value,
+.contact__phones a {
+  color: inherit;
+}
+
+.job__head {
+  background: #fff;
+}
+
+.block > .section-title ~ .section-title {
+  margin-block-start: 2rem;
+}
+
+.skills {
+  gap: 0.4rem;
+}
+
+.timeline {
+  gap: 0.7rem;
+}
+
+.phase {
+  padding: 0.5rem 0 0.5rem 1.25rem;
+}
+
+.job:not(.job--primary) ul {
+  font-size: 0.85rem;
+}
+
+/* Jobs may split across pages — avoids large empty bottoms from break-inside: avoid.
+   Keep smaller units intact so titles stay with a bit of body content. */
+.project,
+.edu,
+.phase {
+  break-inside: avoid;
+}
+
+/* Side projects & libraries: keep the whole section together */
+#hobbies {
+  break-inside: avoid;
+}
+
+.section-title {
+  break-after: avoid;
+}
+
+.job__head {
+  position: static;
+  top: auto;
+  box-shadow: none;
+  border-bottom: none;
+  padding: 0;
+  break-after: avoid;
+}
+
+.phase__title {
+  break-after: avoid;
+}
+
+.project {
+  background: transparent;
+  border: 1px solid #ccc;
+  border-left: 3px solid var(--accent);
+  padding: 0.55rem 0.7rem;
+}
+
+.skills__note {
+  display: none;
+}
+
+.project-peek-popover {
+  display: none !important;
+}
