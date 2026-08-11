@@ -23,8 +23,8 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
 <NavMenu locale={locale} t={t} />
 
 <main class="page">
-  <div class="masthead">
-    <header class="intro" id="intro">
+  <section class="block masthead" id="intro" aria-label={t.intro.name}>
+    <header class="intro">
       <h1>{t.intro.name}</h1>
       <p class="intro__role">{t.intro.role}</p>
       <p class="intro__tagline">{t.intro.tagline}</p>
@@ -97,13 +97,13 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
       </ul>
     </aside>
 
-    <section class="profile" aria-labelledby="profile-heading">
+    <aside class="profile" aria-labelledby="profile-heading">
       <h2 id="profile-heading" class="section-title">{t.profile.title}</h2>
       {t.profile.paragraphs.map((p) => <p set:html={p} />)}
-    </section>
-  </div>
+    </aside>
+  </section>
 
-  <section id="skills" aria-labelledby="skills-heading">
+  <section class="block" id="skills" aria-labelledby="skills-heading">
     <h2 id="skills-heading" class="section-title">{t.skills.title}</h2>
     <div class="skills">
       {
@@ -119,16 +119,14 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
         ))
       }
     </div>
-  </section>
 
-  <section aria-labelledby="languages-heading">
     <h2 id="languages-heading" class="section-title">{t.spoken.title}</h2>
     <ul class="skills__items languages">
       {t.spoken.items.map((item) => <li>{item}</li>)}
     </ul>
   </section>
 
-  <section id="experience" aria-labelledby="experience-heading">
+  <section class="block" id="experience" aria-labelledby="experience-heading">
     <h2 id="experience-heading" class="section-title">{t.experience.title}</h2>
 
     {
@@ -177,7 +175,7 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
     }
   </section>
 
-  <section id="hobbies" aria-labelledby="work-heading">
+  <section class="block" id="hobbies" aria-labelledby="work-heading">
     <h2 id="work-heading" class="section-title">{t.projects.title}</h2>
     <div class="projects">
       {
@@ -185,17 +183,21 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
           const isSelfSite =
             !!project.href &&
             /^https?:\/\/(www\.)?shashankagarwal\.dev\/?$/i.test(project.href);
+          const projectId = `project-${project.name
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "")}`;
           return (
-          <article class="project">
+          <article class="project" id={projectId}>
             <div class="project__head">
               <h3 class="project__name">
                 {project.href && isSelfSite ? (
                   <>
+                    {/* Screen: plain text (already on this site). Print: real link. */}
                     <span class="project__name-text">{project.name}</span>
-                    <a
-                      class="project__link project__link--print"
-                      href={project.href}
-                    >{project.name}</a>
+                    <a class="project__link project__link--print-only" href={project.href}
+                      >{project.name}</a
+                    >
                   </>
                 ) : project.href ? (
                   <a
@@ -221,7 +223,7 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
     </div>
   </section>
 
-  <section aria-labelledby="education-heading">
+  <section class="block block--compact" id="education" aria-labelledby="education-heading">
     <h2 id="education-heading" class="section-title">{t.education.title}</h2>
     <div class="edu">
       <div>
@@ -231,37 +233,45 @@ const copyright = t.credits.copyright.replace("{{buildYear}}", currentYear.toStr
       <span class="edu__year">{t.education.year}</span>
     </div>
   </section>
+
+  <aside class="cta" id="lets-talk" aria-label={t.cta.aria}>
+    <div class="cta__inner">
+      <h2 class="cta__title">{t.cta.title}</h2>
+      <p class="cta__lead">{t.cta.lead}</p>
+      {
+        t.cta.langNote ? (
+          <p class="cta__lang-note">{t.cta.langNote}</p>
+        ) : null
+      }
+      <ul class="cta__list">
+        {
+          t.cta.cards.map((card) => (
+            <li>
+              <a
+                class="cta__card"
+                href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
+                data-ph-event="cta_card_click"
+                data-ph-label={card.label}
+                data-ph-href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
+              >
+                <span class="cta__label">{card.label}</span>
+                <span class="cta__text">{card.text}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </aside>
 </main>
 
-<aside class="cta" id="lets-talk" aria-label={t.cta.aria}>
-  <div class="cta__inner">
-    <h2 class="cta__title">{t.cta.title}</h2>
-    <p class="cta__lead">{t.cta.lead}</p>
-    {
-      t.cta.langNote ? (
-        <p class="cta__lang-note">{t.cta.langNote}</p>
-      ) : null
-    }
-    <ul class="cta__list">
-      {
-        t.cta.cards.map((card) => (
-          <li>
-            <a
-              class="cta__card"
-              href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
-              data-ph-event="cta_card_click"
-              data-ph-label={card.label}
-              data-ph-href={`mailto:${mail}?subject=${encodeURIComponent(card.subject)}`}
-            >
-              <span class="cta__label">{card.label}</span>
-              <span class="cta__text">{card.text}</span>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </div>
-</aside>
+{/* Filled on click for screen peeks (e.g. react-native-molecules from experience) */}
+<div
+  id="project-peek-popover"
+  class="project-peek-popover"
+  popover
+  aria-label="Project preview"
+></div>
 
 <footer class="credits" aria-label={t.credits.aria}>
   <p class="credits__item">{copyright}</p>
