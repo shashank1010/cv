@@ -241,7 +241,7 @@
       },
       {
         "name": "json-tree-editor",
-        "href": "https://github.com/binaryoperations/json-tree-editor",
+        "href": "https://www.npmjs.com/@binaryoperations/json-tree-editor",
         "tag": "Nebenprojekt",
         "stack": "SolidJS · TypeScript · Web Component",
         "description": "Ein leistungsstarker JSON-Tree-Editor für Solid-Apps und über eine Web Component für andere Stacks. Ich leitete einen KI-gestützten Build mit Fokus auf große Bäume und einer einfachen Regel: Der Quellstring bleibt die einzige Dokumentwahrheit."

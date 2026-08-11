@@ -241,7 +241,7 @@
       },
       {
         "name": "json-tree-editor",
-        "href": "https://github.com/binaryoperations/json-tree-editor",
+        "href": "https://www.npmjs.com/@binaryoperations/json-tree-editor",
         "tag": "побочный проект",
         "stack": "SolidJS · TypeScript · Web Component",
         "description": "Высокопроизводительный редактор JSON-дерева для приложений Solid и через веб-компонент для других стеков. Я руководил сборкой с помощью AI с акцентом на большие деревья и простое правило: строка источника остается единственным документом истины."

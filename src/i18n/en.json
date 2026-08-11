@@ -155,7 +155,7 @@
               "Led <strong>TaylorDb</strong> for about two and a half years as it evolved from an app builder into an Airtable-like data product and, eventually, an <strong>AI app builder</strong>.",
               "Treated the client as a local database: all product data arrived over <strong>GraphQL on WebSockets</strong> rather than REST, so I built a dedicated data-loading layer and a subscription system that kept local state in sync while navigating race conditions as events streamed in. A local-first cache let people start working immediately, with live data filling in over subscriptions as it arrived.",
               "Onboarded mid-level engineers and mentored them until they could operate as independent seniors.",
-              "Compared the React Native component libraries available at the time, then designed and built a greenfield library— <strong>react-native-molecules</strong> (<a href=\"https://www.npmjs.com/package/react-native-molecules\">npm</a>)—to serve as the shared UI foundation across products."
+              "Compared the React Native component libraries available at the time, then designed and built a greenfield library— <strong>react-native-molecules</strong> (<a href=\"https://www.npmjs.com/package/react-native-molecules\" target=\"_blank\" rel=\"noopener noreferrer\">npm</a>)—to serve as the shared UI foundation across products."
             ]
           },
           {
@@ -241,7 +241,7 @@
       },
       {
         "name": "json-tree-editor",
-        "href": "https://github.com/binaryoperations/json-tree-editor",
+        "href": "https://www.npmjs.com/@binaryoperations/json-tree-editor",
         "tag": "side project",
         "stack": "SolidJS · TypeScript · Web Component",
         "description": "A performant JSON tree editor for Solid apps and, via a web component, for other stacks. I directed an AI-assisted build with a focus on large trees and a simple rule: the source string remains the single document truth."
