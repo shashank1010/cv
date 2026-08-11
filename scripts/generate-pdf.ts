@@ -135,19 +135,29 @@ async function generatePDF() {
           elements.forEach((el) => ((el as HTMLElement).style.display = 'none'));
         });
 
-        // Generate PDF to dist
+        // Generate PDF to dist (footer page numbers: n / total)
         await page.pdf({
           path: distPdfPath,
           format: 'A4',
           margin: {
-            top: '0.5in',
-            right: '0.5in',
-            bottom: '0.5in',
-            left: '0.5in',
+            top: '14mm',
+            right: '15mm',
+            bottom: '18mm',
+            left: '15mm',
           },
           printBackground: true,
           scale: 1,
           preferCSSPageSize: true,
+          displayHeaderFooter: true,
+          headerTemplate: '<div></div>',
+          footerTemplate: `
+            <div style="width:100%;font-size:8pt;text-align:center;
+                        font-family:system-ui,-apple-system,sans-serif;padding:0 15mm;">
+              <span class="pageNumber" style="color:#333;"></span>
+              <span style="color:#b0b6c0;"> / </span>
+              <span class="totalPages" style="color:#b0b6c0;"></span>
+            </div>
+          `,
         });
 
         // Copy to public directory as well
