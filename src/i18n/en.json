@@ -155,7 +155,7 @@
               "Led <strong>TaylorDb</strong> for about two and a half years as it evolved from an app builder into an Airtable-like data product and, eventually, an <strong>AI app builder</strong>.",
               "Treated the client as a local database: all product data arrived over <strong>GraphQL on WebSockets</strong> rather than REST, so I built a dedicated data-loading layer and a subscription system that kept local state in sync while navigating race conditions as events streamed in. A local-first cache let people start working immediately, with live data filling in over subscriptions as it arrived.",
               "Onboarded mid-level engineers and mentored them until they could operate as independent seniors.",
-              "Compared the React Native component libraries available at the time, then designed and built a greenfield library— <strong>react-native-molecules</strong> (<a href=\"https://www.npmjs.com/package/react-native-molecules\" target=\"_blank\" rel=\"noopener noreferrer\">npm</a>)—to serve as the shared UI foundation across products."
+              "Compared the React Native component libraries available at the time, then designed and built a greenfield library— <strong>react-native-molecules</strong> (<a href=\"https://www.npmjs.com/package/react-native-molecules\" class=\"project-peek\" data-project-peek=\"project-react-native-molecules\" target=\"_blank\" rel=\"noopener noreferrer\">npm</a>)—to serve as the shared UI foundation across products."
             ]
           },
           {

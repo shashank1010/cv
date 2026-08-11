@@ -155,7 +155,7 @@
               "Habe <strong>TaylorDb</strong> etwa zwei einhalb Jahre lang geleitet, während es sich vom App-Builder zu einem Airtable-ähnlichen Datenprodukt und schließlich zu einem <strong>KI-App-Builder</strong> entwickelte.",
               "Habe den Client als lokale Datenbank behandelt: Alle Produktdaten kamen über <strong>GraphQL auf WebSockets</strong> anstatt REST an, daher habe ich eine dedizierte Daten-Loading-Layer und ein Subscription-System gebaut, das lokale States synchron hielt, während ich Race Conditions navigierte, da Events eingingen. Ein Local-First-Cache ließ Leute sofort arbeiten, mit Live-Daten, die sich über Subscriptions einfüllten.",
               "Habe Mid-Level-Ingenieure eingearbeitet und sie mentoriert, bis sie als unabhängige Seniors agieren konnten.",
-              "Habe die verfügbaren React Native Component Libraries zu dieser Zeit verglichen, dann eine Greenfield Library entworfen und gebaut— react-native-molecules (npm) —um als gemeinsame UI-Grundlage über Produkte zu dienen."
+              "Habe die verfügbaren React Native Component Libraries zu dieser Zeit verglichen, dann eine Greenfield Library entworfen und gebaut— <strong>react-native-molecules</strong> (<a href=\"https://www.npmjs.com/package/react-native-molecules\" class=\"project-peek\" data-project-peek=\"project-react-native-molecules\" target=\"_blank\" rel=\"noopener noreferrer\">npm</a>) —um als gemeinsame UI-Grundlage über Produkte zu dienen."
             ]
           },
           {
